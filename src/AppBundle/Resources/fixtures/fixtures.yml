@@ -1,0 +1,35 @@
+AppBundle\Entity\Country:
+    country_{1..230}:
+        code (unique): '<countryCode()>'
+        name (unique): '<country()>'
+
+AppBundle\Entity\PostAddressEmbeddable:
+    postAddress_{1..50}:
+        country: '@country_*->code'
+        city: '<city()>'
+        address: '<streetAddress()>'
+        zipCode: '<postcode()>'
+
+AppBundle\Entity\GeoPointEmbeddable:
+    geopoint_{1..50}:
+        latitude (unique): '<latitude()>'
+        longitude (unique): '<longitude()>'
+
+AppBundle\Entity\User:
+    user_{1..5}:
+        email (unique): '<email()>'
+        gender: 'male'
+        birthdate: '<dateTimeBetween("1980-01-01", "1999-12-31")>'
+        firstName: '<firstName()>'
+        lastName: '<lastName()>'
+        role: 'user'
+        status: 'disabled'
+        registeredAt: '<dateTimeBetween("2000-01-01", "2017-12-31")>'
+        postAddress: '@postAddress_*'
+        coordinates: '@geopoint_*'
+
+AppBundle\Entity\Office:
+    office_{1..30}:
+        name (unique): '<company()>'
+        postAddress: '@postAddress_*'
+        coordinates: '@geopoint_*'

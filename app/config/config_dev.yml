@@ -39,3 +39,13 @@ monolog:
 
 #swiftmailer:
 #    delivery_addresses: ['me@example.com']
+
+fidry_alice_data_fixtures:
+    db_drivers:
+        doctrine_orm: true
+
+hautelook_alice:
+    fixtures_path: 'Resources/fixtures'
+    root_dirs:
+        - '%kernel.root_dir%'
+        - '%kernel.project_dir%'

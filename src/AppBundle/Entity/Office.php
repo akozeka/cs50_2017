@@ -7,11 +7,17 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="office")
+ * @ORM\Table(
+ *     name="office",
+ *     uniqueConstraints={
+ *         @ORM\UniqueConstraint(name="UNIQ_office_slug", columns="slug")
+ *     }
+ * )
  */
 class Office
 {
     use EntityIdentityTrait;
+    use EntityCrudTrait;
     use EntityPostAddressTrait;
 
     /**

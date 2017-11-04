@@ -24,6 +24,7 @@ class User implements UserInterface
     const ROLE_ADMIN = 'admin';
 
     use EntityIdentityTrait;
+    use EntityCrudTrait;
     use EntityPersonNameTrait;
     use EntityPostAddressTrait;
     use TimestampableEntity;
