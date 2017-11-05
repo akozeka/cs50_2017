@@ -2,8 +2,11 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity
@@ -13,6 +16,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *         @ORM\UniqueConstraint(name="UNIQ_office_slug", columns="slug")
  *     }
  * )
+ * @UniqueEntity(fields="slug")
  */
 class Office
 {
@@ -36,38 +40,45 @@ class Office
     private $name;
 
     /**
-     * @return string
+     * @var User[]|Collection|iterable
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\User", mappedBy="office")
      */
+    private $users;
+
+    /**
+     * @var OfficeCategory[]|Collection|iterable
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\OfficeCategory")
+     */
+    private $categories;
+
+    public function __construct()
+    {
+        $this->users = new ArrayCollection();
+        $this->categories = new ArrayCollection();
+    }
+
     public function getSlug()
     {
         return $this->slug;
     }
 
-    /**
-     * @param string $slug
-     * @return Office
-     */
     public function setSlug($slug)
     {
         $this->slug = $slug;
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function addCategory(OfficeCategory $category)
     {
-        return $this->name;
+        if (!$this->categories->contains($category)) {
+            $this->categories[] = $category;
+        }
     }
 
-    /**
-     * @param string $name
-     * @return Office
-     */
-    public function setName($name)
+    public function removeCategory(OfficeCategory $category)
     {
-        $this->name = $name;
-        return $this;
+        $this->categories->removeElement($category);
     }
 }

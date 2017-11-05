@@ -70,7 +70,9 @@ trait EntityCrudTrait
         }
 
         if (!property_exists($this, $property)) {
-            throw new \InvalidArgumentException(sprintf('Unable to magically write the value of the $%s property of the object of type %s.', $property, $class));
+            throw new \InvalidArgumentException(
+                "Unable to magically write the value of the {$property} property of the object of type {$class}."
+            );
         }
 
         $this->{$property} = $value;
@@ -115,7 +117,9 @@ trait EntityCrudTrait
             return $this->{$property};
         }
 
-        throw new \InvalidArgumentException(sprintf('Unable to magically read the value of the $%s property of the object of type %s.', $property, $class));
+        throw new \InvalidArgumentException(
+            "Unable to magically read the value of the \${$property} property of the object of type {$class}."
+        );
     }
 
     /**
@@ -140,6 +144,8 @@ trait EntityCrudTrait
             return $this->{$method};
         }
 
-        throw new \BadMethodCallException(sprintf('Trying to call an unsupported method %s() on an object of type %s.', $method, get_class($this)));
+        throw new \BadMethodCallException(
+            "Trying to call an unsupported method {$method}() on an object of type ".get_class($this)."."
+        );
     }
 }

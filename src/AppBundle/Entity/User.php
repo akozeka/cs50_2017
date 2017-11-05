@@ -74,6 +74,11 @@ class User implements UserInterface
      */
     private $lastLoggedAt;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Office", inversedBy="users")
+     */
+    private $office;
+
     public function getRoles()
     {
         return ($this->role == self::ROLE_ADMIN) ? ['ROLE_ADMIN'] : ['ROLE_USER'];
@@ -176,5 +181,16 @@ class User implements UserInterface
     public function getRegisteredAt()
     {
         return $this->registeredAt;
+    }
+
+    public function getOffice()
+    {
+        return $this->office;
+    }
+
+    public function setOffice($office)
+    {
+        $this->office = $office;
+        return $this;
     }
 }

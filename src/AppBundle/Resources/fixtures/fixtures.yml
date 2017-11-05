@@ -28,8 +28,14 @@ AppBundle\Entity\User:
         postAddress: '@postAddress_*'
         coordinates: '@geopoint_*'
 
+AppBundle\Entity\OfficeCategory:
+    office_category_{1..5}:
+        code (unique): '<stateAbbr()>'
+        name (unique): '<sentence(3)>'
+
 AppBundle\Entity\Office:
     office_{1..30}:
         name (unique): '<company()>'
         postAddress: '@postAddress_*'
         coordinates: '@geopoint_*'
+        categories: ['@office_category_*']
