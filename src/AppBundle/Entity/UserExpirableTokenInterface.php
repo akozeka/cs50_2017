@@ -2,17 +2,19 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Util\ValueObject\SHA1;
+
 interface UserExpirableTokenInterface
 {
-    public static function generate(User $user, $lifetime = '+1 day');
+    public static function generate(User $user, string $lifetime = '+1 day'): self;
 
-    public function getValue();
+    public function getValue(): SHA1;
 
-    public function getUserId();
+    public function getUserId(): int;
 
-    public function getUsageDate();
+    public function getUsageDate(): \DateTime;
 
-    public function consume(User $user);
+    public function consume(User $user): void;
 
-    public function getType();
+    public function getType(): string;
 }

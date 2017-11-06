@@ -16,22 +16,22 @@ trait EntityPersonNameTrait
      */
     private $lastName;
 
-    public function __toString()
+    public function __toString(): string
     {
-        return trim($this->getFullName());
+        return $this->getFullName();
     }
 
-    public function getFullName()
+    public function getFullName(): string
     {
-        return $this->firstName.' '.$this->lastName;
+        return trim($this->firstName.' '.$this->lastName);
     }
 
-    public function getFirstName()
+    public function getFirstName(): string
     {
         return $this->firstName;
     }
 
-    public function getLastName()
+    public function getLastName(): string
     {
         return $this->lastName;
     }

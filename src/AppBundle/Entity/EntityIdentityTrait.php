@@ -15,14 +15,14 @@ trait EntityIdentityTrait
      * @ORM\Column(type="integer", options={"unsigned": true})
      * @ORM\GeneratedValue
      */
-    protected $id;
+    private $id;
 
     /**
      * Returns the primary key identifier.
      *
      * @return int|null
      */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }

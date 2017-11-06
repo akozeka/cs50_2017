@@ -21,6 +21,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 class Country
 {
     use EntityIdentityTrait;
+    use EntityCrudTrait;
 
     /**
      * @var string
@@ -35,40 +36,4 @@ class Country
      * @ORM\Column(type="string")
      */
     private $name;
-
-    /**
-     * @return string
-     */
-    public function getCode()
-    {
-        return $this->code;
-    }
-
-    /**
-     * @param string $code
-     * @return Country
-     */
-    public function setCode($code)
-    {
-        $this->code = $code;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param string $name
-     * @return Country
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-        return $this;
-    }
 }

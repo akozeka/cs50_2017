@@ -15,7 +15,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 final class UserActivationToken extends UserToken
 {
-    public function getType()
+    public function getType(): string
     {
         return 'user activation';
     }

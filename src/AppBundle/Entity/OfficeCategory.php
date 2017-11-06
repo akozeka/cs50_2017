@@ -42,7 +42,7 @@ class OfficeCategory
     /**
      * @var Office[]|Collection|iterable
      *
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Office", inversedBy="categories")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Office", mappedBy="categories")
      */
     private $offices;
 

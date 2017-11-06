@@ -4,7 +4,7 @@ namespace AppBundle\Util\Geo;
 
 interface GeoPointInterface
 {
-    public function getLongitude();
+    public function getLongitude(): ?float;
 
-    public function getLatitude();
+    public function getLatitude(): ?float;
 }

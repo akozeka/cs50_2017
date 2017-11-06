@@ -12,14 +12,14 @@ use Doctrine\ORM\Mapping as ORM;
 class PostAddressEmbeddable implements AddressInterface
 {
     /**
-     * @var string|null
+     * @var string
      *
      * @ORM\Column(type="string", length=2, options={"fixed": true})
      */
     private $country;
 
     /**
-     * @var string|null
+     * @var string
      *
      * @ORM\Column(type="string")
      */
@@ -28,7 +28,7 @@ class PostAddressEmbeddable implements AddressInterface
     /**
      * @var string|null
      *
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     private $address;
 
@@ -39,75 +39,51 @@ class PostAddressEmbeddable implements AddressInterface
      */
     private $zipCode;
 
-    /**
-     * @return null|string
-     */
-    public function getCountry()
+    public function getCountry(): string
     {
         return $this->country;
     }
 
-    /**
-     * @param null|string $country
-     * @return PostAddressEmbeddable
-     */
-    public function setCountry($country)
+    public function setCountry(string $country): self
     {
         $this->country = $country;
+
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getCity()
+    public function getCity(): string
     {
         return $this->city;
     }
 
-    /**
-     * @param null|string $city
-     * @return PostAddressEmbeddable
-     */
-    public function setCity($city)
+    public function setCity(string $city): self
     {
         $this->city = $city;
+
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getAddress()
+    public function getAddress(): ?string
     {
         return $this->address;
     }
 
-    /**
-     * @param null|string $address
-     * @return PostAddressEmbeddable
-     */
-    public function setAddress($address)
+    public function setAddress(?string $address): self
     {
         $this->address = $address;
+
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getZipCode()
+    public function getZipCode(): ?string
     {
         return $this->zipCode;
     }
 
-    /**
-     * @param null|string $zipCode
-     * @return PostAddressEmbeddable
-     */
-    public function setZipCode($zipCode)
+    public function setZipCode(?string $zipCode): self
     {
         $this->zipCode = $zipCode;
+
         return $this;
     }
 }

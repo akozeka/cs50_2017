@@ -20,22 +20,22 @@ class GeoPointEmbeddable implements GeoPointInterface
      */
     private $longitude;
 
-    public function getLatitude()
+    public function getLatitude(): ?float
     {
         return $this->latitude;
     }
 
-    public function setLatitude($latitude)
+    public function setLatitude(?float $latitude)
     {
         $this->latitude = $latitude;
     }
 
-    public function getLongitude()
+    public function getLongitude(): ?float
     {
         return $this->longitude;
     }
 
-    public function setLongitude($longitude)
+    public function setLongitude(?float $longitude)
     {
         $this->longitude = $longitude;
     }

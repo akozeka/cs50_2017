@@ -11,57 +11,51 @@ trait EntityPostAddressTrait
      *
      * @ORM\Embedded(class="AppBundle\Entity\PostAddressEmbeddable", columnPrefix=false)
      */
-    protected $postAddress;
+    private $postAddress;
 
     /**
      * @var GeoPointEmbeddable
      *
      * @ORM\Embedded(class="AppBundle\Entity\GeoPointEmbeddable", columnPrefix=false)
      */
-    protected $coordinates;
+    private $coordinates;
 
-    /**
-     * @return PostAddressEmbeddable
-     */
-    public function getPostAddress()
+    public function getPostAddress(): PostAddressEmbeddable
     {
         return $this->postAddress;
     }
 
-    /**
-     * @return GeoPointEmbeddable
-     */
-    public function getCoordinates()
+    public function getCoordinates(): GeoPointEmbeddable
     {
         return $this->coordinates;
     }
 
-    public function getCountry()
+    public function getCountry(): string
     {
         return $this->postAddress->getCountry();
     }
 
-    public function getCity()
+    public function getCity(): string
     {
         return $this->postAddress->getCity();
     }
 
-    public function getAddress()
+    public function getAddress(): ?string
     {
         return $this->postAddress->getAddress();
     }
 
-    public function getZipCode()
+    public function getZipCode(): ?string
     {
         return $this->postAddress->getZipCode();
     }
 
-    public function getLatitude()
+    public function getLatitude(): ?float
     {
         return $this->coordinates->getLatitude();
     }
 
-    public function getLongitude()
+    public function getLongitude(): ?float
     {
         return $this->coordinates->getLongitude();
     }

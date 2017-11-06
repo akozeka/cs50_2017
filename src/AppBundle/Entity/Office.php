@@ -49,7 +49,7 @@ class Office
     /**
      * @var OfficeCategory[]|Collection|iterable
      *
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\OfficeCategory")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\OfficeCategory", inversedBy="offices")
      */
     private $categories;
 
@@ -59,25 +59,26 @@ class Office
         $this->categories = new ArrayCollection();
     }
 
-    public function getSlug()
+    public function getSlug(): string
     {
         return $this->slug;
     }
 
-    public function setSlug($slug)
+    public function setSlug(string $slug): self
     {
         $this->slug = $slug;
+
         return $this;
     }
 
-    public function addCategory(OfficeCategory $category)
+    public function addCategory(OfficeCategory $category): void
     {
         if (!$this->categories->contains($category)) {
             $this->categories[] = $category;
         }
     }
 
-    public function removeCategory(OfficeCategory $category)
+    public function removeCategory(OfficeCategory $category): void
     {
         $this->categories->removeElement($category);
     }

@@ -4,11 +4,11 @@ namespace AppBundle\Util\Geo;
 
 interface AddressInterface
 {
-    public function getCountry();
+    public function getCountry(): string;
 
-    public function getCity();
+    public function getCity(): string;
 
-    public function getAddress();
+    public function getAddress(): ?string;
 
-    public function getZipCode();
+    public function getZipCode(): ?string;
 }

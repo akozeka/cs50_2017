@@ -61,14 +61,14 @@ abstract class UserToken implements UserExpirableTokenInterface
         $this->value = $value;
     }
 
-    public static function generate(User $user, $lifetime = '+1 day')
+    public static function generate(User $user, string $lifetime = '+1 day'): UserExpirableTokenInterface
     {
         $now = new \DateTime();
 
         return new static($user, $now, new \DateTime($lifetime), SHA1::hash($user->getId().$now->format('U')));
     }
 
-    public function getValue()
+    public function getValue(): SHA1
     {
         if (!$this->value instanceof SHA1) {
             $this->value = SHA1::fromString($this->value);
@@ -77,12 +77,12 @@ abstract class UserToken implements UserExpirableTokenInterface
         return $this->value;
     }
 
-    public function getUserId()
+    public function getUserId(): int
     {
         return $this->userId;
     }
 
-    public function getUsageDate()
+    public function getUsageDate(): \DateTime
     {
         if ($this->usedAt instanceof \DateTime) {
             $this->usedAt = new \DateTime($this->usedAt->format(\DateTime::RFC2822), $this->usedAt->getTimezone());
@@ -91,7 +91,7 @@ abstract class UserToken implements UserExpirableTokenInterface
         return $this->usedAt;
     }
 
-    public function consume(User $user)
+    public function consume(User $user): void
     {
         if ($this->usedAt !== null) {
             throw new \RuntimeException('User token already used!');
@@ -108,7 +108,7 @@ abstract class UserToken implements UserExpirableTokenInterface
         $this->usedAt = new \DateTime();
     }
 
-    private function isExpired()
+    private function isExpired(): bool
     {
         return new \DateTime() > $this->expiredAt;
     }

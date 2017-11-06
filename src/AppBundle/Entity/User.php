@@ -2,8 +2,8 @@
 
 namespace AppBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -79,12 +79,12 @@ class User implements UserInterface
      */
     private $office;
 
-    public function getRoles()
+    public function getRoles(): array
     {
         return ($this->role == self::ROLE_ADMIN) ? ['ROLE_ADMIN'] : ['ROLE_USER'];
     }
 
-    public function getPassword()
+    public function getPassword(): string
     {
         return $this->password;
     }
@@ -93,41 +93,46 @@ class User implements UserInterface
     {
     }
 
-    public function getUsername()
+    public function getUsername(): string
     {
         return $this->email;
     }
 
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
     }
 
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }
 
-    public function getGender()
+    public function getGender(): string
     {
         return $this->gender;
     }
 
-    public function getBirthdate()
+    public function getBirthdate(): ?\DateTime
     {
         return $this->birthdate;
     }
 
-    public function isEnabled()
+    public function getAge(): ?int
+    {
+        return $this->birthdate ? ($this->birthdate->diff(new \DateTime()))->y : null;
+    }
+
+    public function isEnabled(): bool
     {
         return $this->status === self::ENABLED;
     }
 
-    public function getActivatedAt()
+    public function getActivatedAt(): ?\DateTime
     {
         return $this->activatedAt;
     }
 
-    public function changePassword($newPassword)
+    public function changePassword(string $newPassword): void
     {
         $this->password = $newPassword;
     }
@@ -135,12 +140,9 @@ class User implements UserInterface
     /**
      * Activates User account with the provided activation token.
      *
-     * @param UserActivationToken $token
-     * @param string|int $timestamp
-     *
      * @throws \RuntimeException
      */
-    public function activate(UserActivationToken $token, $timestamp = 'now')
+    public function activate(UserActivationToken $token, string $timestamp = 'now'): void
     {
         if ($this->activatedAt) {
             throw new \RuntimeException('User already enabled!');
@@ -154,43 +156,43 @@ class User implements UserInterface
 
     /**
      * Records User's last login datetime.
-     *
-     * @param string|int $timestamp
      */
-    public function recordLastLoggedAt($timestamp = 'now')
+    public function recordLastLoggedAt(string $timestamp = 'now'): void
     {
         $this->lastLoggedAt = new \DateTime($timestamp);
     }
 
-    public function getLastLoggedAt()
+    public function getLastLoggedAt(): ?\DateTime
     {
         return $this->lastLoggedAt;
     }
 
-    public function getStatus()
+    public function getStatus(): string
     {
         return $this->status;
     }
 
-    public function setStatus($status)
+    public function setStatus(string $status): User
     {
         $this->status = $status;
+
         return $this;
     }
 
-    public function getRegisteredAt()
+    public function getRegisteredAt(): \DateTime
     {
         return $this->registeredAt;
     }
 
-    public function getOffice()
+    public function getOffice(): Office
     {
         return $this->office;
     }
 
-    public function setOffice($office)
+    public function setOffice(Office $office): User
     {
         $this->office = $office;
+
         return $this;
     }
 }
