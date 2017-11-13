@@ -2,6 +2,8 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Utils\Geo\AddressInterface;
+use AppBundle\Utils\Geo\GeoPointInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -14,15 +16,19 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *     name="office",
  *     uniqueConstraints={
  *         @ORM\UniqueConstraint(name="UNIQ_office_slug", columns="slug")
+ *     },
+ *     indexes={
+ *         @ORM\Index(name="IDX_office_name", columns="name")
  *     }
  * )
  * @UniqueEntity(fields="slug")
  */
-class Office
+class Office implements AddressInterface, GeoPointInterface
 {
     use EntityIdentityTrait;
     use EntityCrudTrait;
     use EntityPostAddressTrait;
+    use EntityGeoPointTrait;
 
     /**
      * @var string
@@ -69,6 +75,11 @@ class Office
         $this->slug = $slug;
 
         return $this;
+    }
+
+    public function getFullName()
+    {
+        return "$this->name ({$this->getCountry()}, {$this->getCity()}, {$this->getZipCode()})";
     }
 
     public function addCategory(OfficeCategory $category): void

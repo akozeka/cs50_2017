@@ -2,7 +2,7 @@
 
 namespace AppBundle\Entity;
 
-use AppBundle\Util\ValueObject\SHA1;
+use AppBundle\Utils\ValueObject\SHA1;
 
 interface UserExpirableTokenInterface
 {

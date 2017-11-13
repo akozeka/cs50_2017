@@ -1,24 +1,45 @@
-# To get started with security, check out the documentation:
-# https://symfony.com/doc/current/security.html
 security:
-
-    # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
-        in_memory:
-            memory: ~
+        users_db:
+            entity: { class: 'AppBundle\Entity\User' }
+
+    encoders:
+        AppBundle\Entity\User: bcrypt
+
+    access_decision_manager:
+        strategy: unanimous
 
     firewalls:
-        # disables authentication for assets and the profiler, adapt it according to your needs
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
         main:
-            anonymous: ~
-            # activate different ways to authenticate
+            context: main_context
+            provider: users_db
+            switch_user:
+                provider: users_db
+            anonymous: true
 
-            # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
-            #http_basic: ~
+            form_login:
+                login_path: security_login
+                check_path: security_login_check
+                default_target_path: homepage
+                username_parameter: _email
+                password_parameter: _password
+                remember_me: true
+                csrf_token_generator: security.csrf.token_manager
 
-            # https://symfony.com/doc/current/security/form_login_setup.html
-            #form_login: ~
+            logout:
+                path: security_logout
+                target: homepage
+
+            remember_me:
+                secret: '%secret%'
+
+    access_control:
+        - { path: '^/user', roles: ROLE_USER }
+        - { path: '^/admin', roles: ROLE_ADMIN }
+#        - { path: '^/admin/login', roles: [IS_AUTHENTICATED_ANONYMOUSLY] }
+#        - { path: '^/admin/impersonation/exit', roles: [ROLE_PREVIOUS_ADMIN] }
+#        - { path: '^/membre/.*', roles: IS_AUTHENTICATED_FULLY }

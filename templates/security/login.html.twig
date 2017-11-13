@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block page_title 'Login' %}
+
+{% block content %}
+    <main>
+        <h2>Log in</h2>
+
+        <div class="row">
+            <form action="{{ path('security_login_check') }}" method="post" class="col-xs-3 text-center">
+
+                {{ form_errors(form) }}
+
+                {% if error %}
+                    <div class="alert alert-danger alert-dismissable fade in">
+                        Invalid credentials!
+                    </div>
+                {% endif %}
+
+                <div>
+                    {{ form_widget(form._email, { 'attr': { 'placeholder': 'E-mail' } }) }}
+                </div>
+
+                <div>
+                    {{ form_widget(form._password, { 'attr': { 'placeholder': 'Password' } }) }}
+                </div>
+
+                <div>
+                    {{ form_widget(form._password, { 'attr': { 'placeholder': 'Password' } }) }}
+                </div>
+
+                {{ form_rest(form) }}
+
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+        </div>
+
+        <p>Not registered yet?</p>
+
+        <a href="{{ path('register') }}" class="btn btn-default">Register</a>
+    </main>
+{% endblock %}

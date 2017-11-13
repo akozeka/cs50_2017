@@ -1,12 +1,15 @@
 imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
-    - { resource: services.yml }
+    - { resource: services/ }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
+    pattern_id: '\d+'
+    pattern_sha1: '[0-9A-Fa-f]{40}'
+    pattern_coordinate: '-?\d+(\.\d{1,7})?'
 
 framework:
     #esi: ~
@@ -37,6 +40,13 @@ framework:
 twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
+    paths:
+        '%kernel.project_dir%/templates': ~
+    globals:
+        recaptcha_public_key: '%recaptcha_public_key%'
+        google_maps_api_key: '%google_maps_api_key%'
+    form_themes:
+        - 'form_theme.html.twig'
 
 # Doctrine Configuration
 doctrine:

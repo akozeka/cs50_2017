@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Util\Geo;
+namespace AppBundle\Utils\Geo;
 
 interface GeoPointInterface
 {

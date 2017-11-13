@@ -1,0 +1,89 @@
+{#{% set homepage_url = url('homepage')|trim('/') %}#}
+{#{% set user_is_user = is_granted('ROLE_USER') %}#}
+{#{% set user_is_admin = is_granted('ROLE_ADMIN') %}#}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% block meta '' %}
+
+    <title>{% block title %}{% block page_title '' %} | {% block app_title 'CS50_2017' %}{% endblock %}</title>
+
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-theme.min.css') }}">
+    {% block stylesheets '' %}
+    {% block final_stylesheets '' %}
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+</head>
+<body>
+{% block header %}
+    <header>
+        <div class="container">
+            <div class="page-header">CS50_2017</div>
+
+            <nav class="navbar navbar-default">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                            data-target="#navbar-main" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+
+                <div class="collapse navbar-collapse" id="navbar-main">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+                        <li><a href="#">Link</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        {% if app.user %}
+                            <li>Logged in as: <strong>{{ app.user.fullName }}</strong> <a
+                                        href="{{ path('security_logout') }}">Logout</a></li>
+                        {% else %}
+                            <li>Not logged in. <a href="{{ path('security_login') }}">Login</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+{% endblock %}
+
+<div class="container">
+    {% for type, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert alert-{{ type }} alert-dismissable fade in">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+
+    <div class="content">
+        {% block content '' %}
+    </div>
+</div>
+
+{% block footer %}
+    <footer>
+        <div class="container">
+            <div class="page-footer">
+                &copy; {{ 'now'|date('Y') }}
+            </div>
+        </div>
+    </footer>
+{% endblock %}
+
+<script type="text/javascript" src="{{ asset('js/jquery-3.2.1.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/bootstrap-3.3.7.min.js') }}"></script>
+{% block javascripts '' %}
+{% block final_javascripts '' %}
+<script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
+
+</body>
+</html>

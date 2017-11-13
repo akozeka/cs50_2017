@@ -36,4 +36,19 @@ class Country
      * @ORM\Column(type="string")
      */
     private $name;
+
+    public function __toString()
+    {
+        return $this->code;
+    }
+
+    public function getCode(): string
+    {
+        return $this->code;
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
 }

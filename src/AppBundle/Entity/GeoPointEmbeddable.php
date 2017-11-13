@@ -2,7 +2,7 @@
 
 namespace AppBundle\Entity;
 
-use AppBundle\Util\Geo\GeoPointInterface;
+use AppBundle\Utils\Geo\GeoPointInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**

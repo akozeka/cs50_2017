@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% use 'user/_form.html.twig' %}
+
+{% block title 'Register' %}
+
+{% block javascripts %}
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+{% endblock %}
+
+{% block content %}
+    <main class="col-sm-8">
+        {{ block('user_form') }}
+    </main>
+{% endblock %}

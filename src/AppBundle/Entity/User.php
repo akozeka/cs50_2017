@@ -2,12 +2,13 @@
 
 namespace AppBundle\Entity;
 
-use Gedmo\Timestampable\Traits\TimestampableEntity;
+use AppBundle\Utils\Geo\AddressInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  * @ORM\Table(
  *     name="user",
  *     uniqueConstraints={
@@ -15,7 +16,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  *     }
  * )
  */
-class User implements UserInterface
+class User implements UserInterface, AddressInterface
 {
     const ENABLED = 'enabled';
     const DISABLED = 'disabled';
@@ -79,6 +80,31 @@ class User implements UserInterface
      */
     private $office;
 
+    public function __construct(
+        string $email,
+        string $firstName,
+        string $lastName,
+        string $gender,
+        \DateTime $birthdate,
+        string $password,
+        string $role,
+        string $status,
+        PostAddressEmbeddable $postAddress,
+        ?Office $office = null
+    ) {
+        $this->email = $email;
+        $this->firstName = $firstName;
+        $this->lastName = $lastName;
+        $this->gender = $gender;
+        $this->birthdate = $birthdate;
+        $this->password = $password;
+        $this->role = $role;
+        $this->status = $status;
+        $this->registeredAt = new \DateTime();
+        $this->postAddress = $postAddress;
+        $this->office = $office;
+    }
+
     public function getRoles(): array
     {
         return ($this->role == self::ROLE_ADMIN) ? ['ROLE_ADMIN'] : ['ROLE_USER'];
@@ -88,6 +114,13 @@ class User implements UserInterface
     {
         return $this->password;
     }
+
+//    public function setPassword($password): self
+//    {
+//        $this->password = $password;
+//
+//        return $this;
+//    }
 
     public function getSalt()
     {
@@ -107,34 +140,81 @@ class User implements UserInterface
         return $this->email;
     }
 
+//    public function setEmail(string $email): self
+//    {
+//        $this->email = $email;
+//
+//        return $this;
+//    }
+
     public function getGender(): string
     {
         return $this->gender;
     }
+
+//    public function setGender(string $gender): self
+//    {
+//        $this->gender = $gender;
+//
+//        return $this;
+//    }
 
     public function getBirthdate(): ?\DateTime
     {
         return $this->birthdate;
     }
 
-    public function getAge(): ?int
+//    public function setBirthdate(?\DateTime $birthdate): self
+//    {
+//        $this->birthdate = $birthdate;
+//
+//        return $this;
+//    }
+
+    public function getAge(): int
     {
-        return $this->birthdate ? ($this->birthdate->diff(new \DateTime()))->y : null;
+        return $this->birthdate ? ($this->birthdate->diff(new \DateTime()))->y : 0;
     }
 
-    public function isEnabled(): bool
+    public function getRole(): string
     {
-        return $this->status === self::ENABLED;
+        return $this->role;
     }
+
+//    public function setRole(string $role): self
+//    {
+//        $this->role = $role;
+//
+//        return $this;
+//    }
+
+    public function getStatus(): string
+    {
+        return $this->status;
+    }
+
+//    public function setStatus(string $status): self
+//    {
+//        $this->status = $status;
+//
+//        return $this;
+//    }
+
+    public function getRegisteredAt(): \DateTime
+    {
+        return $this->registeredAt;
+    }
+
+//    public function setRegisteredAt(\DateTime $registeredAt): self
+//    {
+//        $this->registeredAt = $registeredAt;
+//
+//        return $this;
+//    }
 
     public function getActivatedAt(): ?\DateTime
     {
         return $this->activatedAt;
-    }
-
-    public function changePassword(string $newPassword): void
-    {
-        $this->password = $newPassword;
     }
 
     /**
@@ -145,13 +225,23 @@ class User implements UserInterface
     public function activate(UserActivationToken $token, string $timestamp = 'now'): void
     {
         if ($this->activatedAt) {
-            throw new \RuntimeException('User already enabled!');
+            throw new \RuntimeException('User already activated!');
         }
 
         $token->consume($this);
 
         $this->status = self::ENABLED;
         $this->activatedAt = new \DateTime($timestamp);
+    }
+
+    public function isEnabled(): bool
+    {
+        return $this->status === self::ENABLED;
+    }
+
+    public function getLastLoggedAt(): ?\DateTime
+    {
+        return $this->lastLoggedAt;
     }
 
     /**
@@ -162,37 +252,20 @@ class User implements UserInterface
         $this->lastLoggedAt = new \DateTime($timestamp);
     }
 
-    public function getLastLoggedAt(): ?\DateTime
-    {
-        return $this->lastLoggedAt;
-    }
-
-    public function getStatus(): string
-    {
-        return $this->status;
-    }
-
-    public function setStatus(string $status): User
-    {
-        $this->status = $status;
-
-        return $this;
-    }
-
-    public function getRegisteredAt(): \DateTime
-    {
-        return $this->registeredAt;
-    }
-
     public function getOffice(): Office
     {
         return $this->office;
     }
 
-    public function setOffice(Office $office): User
-    {
-        $this->office = $office;
+//    public function setOffice(Office $office): self
+//    {
+//        $this->office = $office;
+//
+//        return $this;
+//    }
 
-        return $this;
+    public function equals(self $other): bool
+    {
+        return $this->id === $other->getId();
     }
 }

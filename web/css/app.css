@@ -1,0 +1,18 @@
+label.control-label.required:after {
+    color: red;
+    margin-right: -9px;
+    content: " *";
+    white-space: nowrap;
+}
+
+.validation-error {
+    color: red;
+}
+
+ul.status-messages li.info {
+    color: green;
+}
+
+ul.status-messages li.error {
+    color: red;
+}

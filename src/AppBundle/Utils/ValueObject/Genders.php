@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Util\ValueObject;
+namespace AppBundle\Utils\ValueObject;
 
 final class Genders
 {
@@ -12,10 +12,10 @@ final class Genders
         self::FEMALE,
     ];
 
-//    const CHOICES = [
-//        'common.gender.mister' => self::MALE,
-//        'common.gender.miss' => self::FEMALE,
-//    ];
+    const CHOICES = [
+        'male' => self::MALE,
+        'female' => self::FEMALE,
+    ];
 
     public static function all()
     {

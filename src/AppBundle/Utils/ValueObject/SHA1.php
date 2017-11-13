@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Util\ValueObject;
+namespace AppBundle\Utils\ValueObject;
 
 final class SHA1
 {

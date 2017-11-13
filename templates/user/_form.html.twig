@@ -1,0 +1,61 @@
+{% block user_form %}
+    {{ form_start(form) }}
+
+    {{ form_errors(form) }}
+
+    <fieldset>
+        <legend>Access information</legend>
+        {% if form.email is defined %}
+            {{ form_row(form.email, { label: 'E-mail:' }) }}
+        {% endif %}
+
+        {% if form.password is defined %}
+            {{ form_row(form.password.first, { label: 'Password:', attr: { placeholder: 'min 6 characters' } }) }}
+            {{ form_row(form.password.second, { label: 'Password confirmation:', attr: { placeholder: 're-enter password' } }) }}
+        {% endif %}
+    </fieldset>
+
+    <fieldset>
+        <legend>Personal information</legend>
+        {{ form_row(form.firstName, { label: 'First name:' }) }}
+        {{ form_row(form.lastName, { label: 'Last name:' }) }}
+        {{ form_row(form.gender, { label: 'Gender:' }) }}
+        {{ form_row(form.birthdate, { label: 'Birthdate:' }) }}
+    </fieldset>
+
+    <fieldset>
+        <legend>Address information</legend>
+        {{ form_row(form.address.country, { label: 'Country:' }) }}
+        {{ form_row(form.address.city, { label: 'City:' }) }}
+        {{ form_row(form.address.address, { label: 'Address:' }) }}
+        {{ form_row(form.address.zipCode, { label: 'ZIP code:' }) }}
+    </fieldset>
+
+    <fieldset>
+        <legend>Work office information</legend>
+        {{ form_row(form.office, { label: 'Office:' }) }}
+    </fieldset>
+
+    {% if form.conditions is defined %}
+        {{ form_row(form.conditions, { label: 'I accept Terms & Conditions' }) }}
+    {% endif %}
+
+    {% if recaptcha_public_key is not empty %}
+        {% for flashMessage in app.flashes('error_recaptcha') %}
+            <p>{{ flashMessage }}</p>
+        {% endfor %}
+        <div class="form-group">
+            <div class="col-sm-10 col-sm-offset-2">
+                <div class="g-recaptcha" data-sitekey="{{ recaptcha_public_key }}"></div>
+            </div>
+        </div>
+    {% elseif app.debug %}
+        <input type="hidden" name="g-recaptcha-response" value="fake" />
+    {% endif %}
+
+    <div class="text-center">
+        {{ form_widget(form.submit, { attr: { class: 'btn-primary' } }) }}
+    </div>
+
+    {{ form_end(form) }}
+{% endblock %}

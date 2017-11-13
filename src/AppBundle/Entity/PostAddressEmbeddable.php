@@ -2,8 +2,8 @@
 
 namespace AppBundle\Entity;
 
-use AppBundle\Util\Geo\AddressInterface;
-use AppBundle\Util\Geo\GeoCoordinates;
+use AppBundle\Utils\Geo\AddressInterface;
+use AppBundle\Utils\Geo\GeoCoordinates;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -38,6 +38,14 @@ class PostAddressEmbeddable implements AddressInterface
      * @ORM\Column(type="string", nullable=true)
      */
     private $zipCode;
+
+    public function __construct(string $country, string $city, ?string $address, ?string $zipCode)
+    {
+        $this->country = $country;
+        $this->city = $city;
+        $this->address = $address;
+        $this->zipCode = $zipCode;
+    }
 
     public function getCountry(): string
     {
