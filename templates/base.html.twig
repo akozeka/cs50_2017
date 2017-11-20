@@ -20,33 +20,7 @@
     <header>
         <div class="container">
             <div class="page-header">CS50_2017</div>
-
-            <nav class="navbar navbar-default">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                            data-target="#navbar-main" aria-expanded="false">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                </div>
-
-                <div class="collapse navbar-collapse" id="navbar-main">
-                    <ul class="nav navbar-nav">
-                        <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-                        <li><a href="#">Link</a></li>
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        {% if app.user %}
-                            <li>Logged in as: <strong>{{ app.user.fullName }}</strong> <a
-                                        href="{{ path('security_logout') }}">Logout</a></li>
-                        {% else %}
-                            <li>Not logged in. <a href="{{ path('security_login') }}">Login</a></li>
-                        {% endif %}
-                    </ul>
-                </div>
-            </nav>
+            {% include 'nav_main.html.twig' %}
         </div>
     </header>
 {% endblock %}
@@ -62,36 +36,20 @@
     {% endfor %}
 
     <div class="content">
-
-        {#<div class="l__wrapper--aside settings-menu">#}
-            {#<ul>#}
-                {#{% set route = app.request.attributes.get('_route') %}#}
-                {#{% for target, link in {#}
-                {#'app_adherent_profile': 'Mon compte',#}
-                {#'app_summary_manager_index': 'Modifier mon profil',#}
-                {#'app_adherent_edit': 'Mes informations personnelles',#}
-                {#'app_adherent_set_email_notifications': 'Notifications',#}
-                {#'app_adherent_change_password': 'Mot de passe',#}
-                {#} %}#}
-                    {#<li class="{{ route == target ? 'active' }}">#}
-                        {#<a href="{{ path(target) }}">{{ link }}</a>#}
-                    {#</li>#}
-                {#{% endfor %}#}
-            {#</ul>#}
-        {#</div>#}
-        {#{{ dump(app.request.get('_route')) }}#}
         {% block content '' %}
     </div>
 </div>
 
 {% block footer %}
-    <footer>
-        <div class="container">
-            <div class="page-footer">
-                &copy; {{ 'now'|date('Y') }}
+    <div class="container">
+        <footer>
+            <div class="container">
+                <div class="page-footer">
+                    &copy; {{ 'now'|date('Y') }}
+                </div>
             </div>
-        </div>
-    </footer>
+        </footer>
+    </div>
 {% endblock %}
 
 <script type="text/javascript" src="{{ asset('js/jquery-3.2.1.min.js') }}"></script>

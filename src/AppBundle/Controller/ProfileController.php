@@ -17,12 +17,12 @@ use Symfony\Component\HttpFoundation\Response;
 class ProfileController extends Controller
 {
     /**
-     * @Route("/", name="user_homepage")
+     * @Route("/home", name="user_home")
      * @Method("GET")
      */
     public function userHomepageAction()
     {
-        return $this->render('user/homepage.html.twig');
+        return $this->render('user/home.html.twig');
     }
 
     /**
@@ -41,7 +41,7 @@ class ProfileController extends Controller
             $this->get('app.registration_handler')->update($user, $registration);
             $this->addFlash('info', 'Profile updated');
 
-            return $this->redirectToRoute('user_homepage');
+            return $this->redirectToRoute('user_home');
         }
 
         return $this->render('user/profile.html.twig', ['form' => $form->createView()]);

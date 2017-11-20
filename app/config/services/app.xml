@@ -4,6 +4,12 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
 
+        <!-- Menu -->
+        <service id="app.menu.voter.request" class="AppBundle\Menu\RequestVoter">
+            <argument type="service" id="request_stack"/>
+            <tag name="knp_menu.voter"/>
+        </service>
+
         <!-- Users -->
         <service id="app.validator.unique_registration" class="AppBundle\Validator\UniqueRegistrationValidator">
             <argument type="service" id="app.repository.user"/>
