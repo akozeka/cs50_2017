@@ -3,17 +3,19 @@
 
     {{ form_errors(form) }}
 
-    <fieldset>
-        <legend>Access information</legend>
-        {% if form.email is defined %}
-            {{ form_row(form.email, { label: 'E-mail:' }) }}
-        {% endif %}
+    {% if form.email is defined %}
+        <fieldset>
+            <legend>Access information</legend>
+            {% if form.email is defined %}
+                {{ form_row(form.email, { label: 'E-mail:' }) }}
+            {% endif %}
 
-        {% if form.password is defined %}
-            {{ form_row(form.password.first, { label: 'Password:', attr: { placeholder: 'min 6 characters' } }) }}
-            {{ form_row(form.password.second, { label: 'Password confirmation:', attr: { placeholder: 're-enter password' } }) }}
-        {% endif %}
-    </fieldset>
+            {% if form.password is defined %}
+                {{ form_row(form.password.first, { label: 'Password:', attr: { placeholder: 'min 6 characters' } }) }}
+                {{ form_row(form.password.second, { label: 'Password confirmation:', attr: { placeholder: 're-enter password' } }) }}
+            {% endif %}
+        </fieldset>
+    {% endif %}
 
     <fieldset>
         <legend>Personal information</legend>
@@ -50,7 +52,7 @@
             </div>
         </div>
     {% elseif app.debug %}
-        <input type="hidden" name="g-recaptcha-response" value="fake" />
+        <input type="hidden" name="g-recaptcha-response" value="fake"/>
     {% endif %}
 
     <div class="text-center">

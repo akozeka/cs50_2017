@@ -45,7 +45,6 @@ class RegistrationFormType extends AbstractType
                 },
                 'placeholder' => 'Choose office',
             ])
-
             ->add('password', RepeatedType::class, ['type' => PasswordType::class])
             ->add('conditions', CheckboxType::class);
     }

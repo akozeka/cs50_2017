@@ -63,14 +63,13 @@ class RegistrationHandler
         );
     }
 
-//    public function update(User $user, Registration $registration)
-//    {
-//        $user->updateMembership($registration, $this->addressFactory->createFromAddress($registration->getAddress()));
-//
-//        $this->dispatcher->dispatch(AdherentEvents::PROFILE_UPDATED, new AdherentProfileWasUpdatedEvent($user));
-//
-//        $this->manager->flush();
-//    }
+    public function update(User $user, Registration $registration)
+    {
+        $user->update($registration);
+        $this->manager->flush();
+
+        $this->dispatcher->dispatch(Events::USER_PROFILE_UPDATED, new GenericEvent(['user' => $user]));
+    }
 
     private function encodePassword(string $password): string
     {

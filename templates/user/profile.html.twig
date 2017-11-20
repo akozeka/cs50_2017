@@ -1,21 +1,9 @@
-{% extends 'adherent/layout.twig' %}
+{% extends 'base.html.twig' %}
 
-{% use 'adherent/_membership_form.html.twig' %}
+{% use 'user/_form.html.twig' %}
 
-{% block javascripts %}
-    {% import 'javascript.js.twig' as js %}
-    <script type="text/javascript">
-        Kernel.onLoad(function() {
-            {{ js.address(form.address) }}
-        });
-    </script>
-{% endblock %}
+{% block content %}
+    <h2>Edit profile</h2>
 
-{% block adherent_profile_form %}
-
-    <h2>Mes informations personnelles</h2>
-    <p>Modifiez vos informations personnelles.</p>
-
-    {{ block('adherent_membership_form') }}
-
+    {{ block('user_form') }}
 {% endblock %}

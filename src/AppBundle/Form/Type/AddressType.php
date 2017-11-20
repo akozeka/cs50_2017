@@ -30,7 +30,9 @@ class AddressType extends AbstractType
         $builder
             ->add('country', EntityType::class, [
                 'class' => Country::class,
-                'choice_value' => 'code',
+                'choice_value' => function ($country) {
+                    return ($country instanceof Country) ? $country->getCode() : $country;
+                },
                 'choice_label' => 'name',
                 'query_builder' => function (EntityRepository $repository) {
                     return $repository->createQueryBuilder('c')->orderBy('c.name', 'ASC');

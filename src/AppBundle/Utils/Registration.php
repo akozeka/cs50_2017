@@ -2,10 +2,10 @@
 
 namespace AppBundle\Utils;
 
+use AppBundle\Entity\User;
 use AppBundle\Utils\Geo\Address;
-use AppBundle\Validator\Recaptcha as AssertRecaptcha;
-use AppBundle\Validator\UniqueRegistration as AssertUniqueRegistration;
 use AppBundle\Utils\ValueObject\Genders;
+use AppBundle\Validator\UniqueRegistration as AssertUniqueRegistration;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -94,22 +94,19 @@ class Registration implements RegistrationInterface
         return $dto;
     }
 
-//    public static function createFromUser(User $user): self
-//    {
-//        $dto = new self();
-//        $dto->gender = $adherent->getGender();
-//        $dto->firstName = $adherent->getFirstName();
-//        $dto->lastName = $adherent->getLastName();
-//        $dto->birthdate = $adherent->getBirthdate();
-//        $dto->position = $adherent->getPosition();
-//        $dto->address = Address::createFromAddress($adherent->getPostAddress());
-//        $dto->phone = $adherent->getPhone();
-//        $dto->comMobile = $adherent->getComMobile();
-//        $dto->comEmail = $adherent->getComEmail();
-//        $dto->emailAddress = $adherent->getEmailAddress();
-//
-//        return $dto;
-//    }
+    public static function createFromUser(User $user): self
+    {
+        $dto = new self();
+        $dto->email = $user->getEmail();
+        $dto->gender = $user->getGender();
+        $dto->firstName = $user->getFirstName();
+        $dto->lastName = $user->getLastName();
+        $dto->birthdate = $user->getBirthdate();
+        $dto->address = Address::createFromAddress($user->getPostAddress());
+        $dto->office = $user->getOffice();
+
+        return $dto;
+    }
 
     public function getEmail(): string
     {

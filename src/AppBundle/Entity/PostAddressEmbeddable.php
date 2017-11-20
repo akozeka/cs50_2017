@@ -3,7 +3,6 @@
 namespace AppBundle\Entity;
 
 use AppBundle\Utils\Geo\AddressInterface;
-use AppBundle\Utils\Geo\GeoCoordinates;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -45,6 +44,25 @@ class PostAddressEmbeddable implements AddressInterface
         $this->city = $city;
         $this->address = $address;
         $this->zipCode = $zipCode;
+    }
+
+    public static function createFromAddress(AddressInterface $address): self
+    {
+        return new self(
+            $address->getCountry(),
+            $address->getCity(),
+            $address->getAddress(),
+            $address->getZipCode()
+        );
+    }
+
+    public function equals(AddressInterface $other): bool
+    {
+        return
+            mb_strtolower($this->country) === mb_strtolower($other->getCountry()) &&
+            mb_strtolower($this->city) === mb_strtolower($other->getCity()) &&
+            mb_strtolower($this->address) === mb_strtolower($other->getAddress()) &&
+            mb_strtolower($this->zipCode) === mb_strtolower($other->getZipCode());
     }
 
     public function getCountry(): string

@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use AppBundle\Utils\Geo\AddressInterface;
+use AppBundle\Utils\Registration;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -114,13 +115,6 @@ class User implements UserInterface, AddressInterface
     {
         return $this->password;
     }
-
-//    public function setPassword($password): self
-//    {
-//        $this->password = $password;
-//
-//        return $this;
-//    }
 
     public function getSalt()
     {
@@ -234,6 +228,21 @@ class User implements UserInterface, AddressInterface
         $this->activatedAt = new \DateTime($timestamp);
     }
 
+    public function update(Registration $registration): void
+    {
+        $this->email = $registration->getEmail();
+        $this->firstName = $registration->firstName;
+        $this->lastName = $registration->lastName;
+        $this->gender = $registration->gender;
+        $this->birthdate = $registration->getBirthdate();
+
+        $address = $registration->getAddress();
+
+        if (!$this->postAddress->equals($address)) {
+            $this->postAddress = PostAddressEmbeddable::createFromAddress($address);
+        }
+    }
+
     public function isEnabled(): bool
     {
         return $this->status === self::ENABLED;
@@ -252,17 +261,10 @@ class User implements UserInterface, AddressInterface
         $this->lastLoggedAt = new \DateTime($timestamp);
     }
 
-    public function getOffice(): Office
+    public function getOffice(): ?Office
     {
         return $this->office;
     }
-
-//    public function setOffice(Office $office): self
-//    {
-//        $this->office = $office;
-//
-//        return $this;
-//    }
 
     public function equals(self $other): bool
     {
