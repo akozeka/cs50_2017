@@ -2,6 +2,7 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\Office;
 use AppBundle\Entity\User;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
@@ -53,17 +54,31 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Us
         return $this->findOneBy(['email' => $email]);
     }
 
-    public function countActiveUsers(): int
+    public function findActiveUsersByOffice(Office $office): array
     {
-        $query = $this
-            ->createQueryBuilder('u')
-            ->select('COUNT(u.id)')
-            ->where('u.status = :status')
-            ->setParameter('status', User::ENABLED)
-            ->getQuery();
+        $qb = $this->createQueryBuilder('u');
 
-        return (int)$query->getSingleScalarResult();
+        return $qb
+            ->where('u.status = :status AND u.office = :office')
+            ->setParameter('status', User::ENABLED)
+            ->setParameter('office', $office)
+            ->addOrderBy('u.lastName', 'ASC')
+            ->addOrderBy('u.firstName', 'ASC')
+            ->getQuery()
+            ->getResult();
     }
+
+//    public function countActiveUsers(): int
+//    {
+//        $query = $this
+//            ->createQueryBuilder('u')
+//            ->select('COUNT(u.id)')
+//            ->where('u.status = :status')
+//            ->setParameter('status', User::ENABLED)
+//            ->getQuery();
+//
+//        return (int)$query->getSingleScalarResult();
+//    }
 
 //    public function findList(array $ids): UserCollection
 //    {

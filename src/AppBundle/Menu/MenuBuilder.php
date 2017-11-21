@@ -2,7 +2,6 @@
 
 namespace AppBundle\Menu;
 
-use AppBundle\Entity\Office;
 use Knp\Menu\FactoryInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
@@ -16,8 +15,9 @@ class MenuBuilder implements ContainerAwareInterface
         $menu = $factory->createItem('root');
 
         $menu->setChildrenAttribute('class', 'nav navbar-nav');
-        $menu->addChild('Home', array('route' => 'homepage'));
-        $menu->addChild('Register', array('route' => 'register'));
+        $menu->addChild('Home', ['route' => 'homepage']);
+        $menu->addChild('Register', ['route' => 'register']);
+        $menu->addChild('Offices', ['route' => 'office_list']);
 
         return $menu;
     }
@@ -27,8 +27,9 @@ class MenuBuilder implements ContainerAwareInterface
         $menu = $factory->createItem('root');
 
         $menu->setChildrenAttribute('class', 'nav navbar-nav');
-        $menu->addChild('Home', array('route' => 'user_home'));
-        $menu->addChild('Edit profile', array('route' => 'user_edit'));
+        $menu->addChild('Home', ['route' => 'user_home']);
+        $menu->addChild('Edit profile', ['route' => 'user_edit']);
+        $menu->addChild('Offices', ['route' => 'office_list']);
 
         return $menu;
     }
@@ -38,7 +39,7 @@ class MenuBuilder implements ContainerAwareInterface
         $menu = $factory->createItem('root');
 
         $menu->setChildrenAttribute('class', 'nav navbar-nav');
-        $menu->addChild('Home', array('route' => 'user_home'));
+        $menu->addChild('Home', ['route' => 'user_home']);
 
         return $menu;
     }

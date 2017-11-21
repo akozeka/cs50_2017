@@ -2,8 +2,8 @@
 
 namespace AppBundle\Entity;
 
-use AppBundle\Utils\Geo\AddressInterface;
 use AppBundle\Utils\Registration;
+use AppBundle\Utils\Geo\AddressInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -14,6 +14,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
  *     name="user",
  *     uniqueConstraints={
  *         @ORM\UniqueConstraint(name="UNIQ_user_email", columns="email")
+ *     },
+ *     indexes={
+ *         @ORM\Index(name="IDX_user_full_name", columns={"last_name", "first_name"})
  *     }
  * )
  */
@@ -134,36 +137,15 @@ class User implements UserInterface, AddressInterface
         return $this->email;
     }
 
-//    public function setEmail(string $email): self
-//    {
-//        $this->email = $email;
-//
-//        return $this;
-//    }
-
     public function getGender(): string
     {
         return $this->gender;
     }
 
-//    public function setGender(string $gender): self
-//    {
-//        $this->gender = $gender;
-//
-//        return $this;
-//    }
-
     public function getBirthdate(): ?\DateTime
     {
         return $this->birthdate;
     }
-
-//    public function setBirthdate(?\DateTime $birthdate): self
-//    {
-//        $this->birthdate = $birthdate;
-//
-//        return $this;
-//    }
 
     public function getAge(): int
     {
@@ -175,36 +157,15 @@ class User implements UserInterface, AddressInterface
         return $this->role;
     }
 
-//    public function setRole(string $role): self
-//    {
-//        $this->role = $role;
-//
-//        return $this;
-//    }
-
     public function getStatus(): string
     {
         return $this->status;
     }
 
-//    public function setStatus(string $status): self
-//    {
-//        $this->status = $status;
-//
-//        return $this;
-//    }
-
     public function getRegisteredAt(): \DateTime
     {
         return $this->registeredAt;
     }
-
-//    public function setRegisteredAt(\DateTime $registeredAt): self
-//    {
-//        $this->registeredAt = $registeredAt;
-//
-//        return $this;
-//    }
 
     public function getActivatedAt(): ?\DateTime
     {
@@ -212,8 +173,6 @@ class User implements UserInterface, AddressInterface
     }
 
     /**
-     * Activates User account with the provided activation token.
-     *
      * @throws \RuntimeException
      */
     public function activate(UserActivationToken $token, string $timestamp = 'now'): void
@@ -253,9 +212,6 @@ class User implements UserInterface, AddressInterface
         return $this->lastLoggedAt;
     }
 
-    /**
-     * Records User's last login datetime.
-     */
     public function recordLastLoggedAt(string $timestamp = 'now'): void
     {
         $this->lastLoggedAt = new \DateTime($timestamp);

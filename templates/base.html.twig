@@ -12,8 +12,8 @@
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/bootstrap-theme.min.css') }}">
     {% block stylesheets '' %}
-    {% block final_stylesheets '' %}
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    {% block final_stylesheets '' %}
 </head>
 <body>
 {% block header %}
@@ -41,22 +41,20 @@
 </div>
 
 {% block footer %}
-    <div class="container">
-        <footer>
-            <div class="container">
-                <div class="page-footer">
-                    &copy; {{ 'now'|date('Y') }}
-                </div>
+    <footer>
+        <div class="container">
+            <div class="page-footer">
+                &copy; {{ 'now'|date('Y') }}
             </div>
-        </footer>
-    </div>
+        </div>
+    </footer>
 {% endblock %}
 
 <script type="text/javascript" src="{{ asset('js/jquery-3.2.1.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/bootstrap-3.3.7.min.js') }}"></script>
 {% block javascripts '' %}
-{% block final_javascripts '' %}
 <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
+{% block final_javascripts '' %}
 
 </body>
 </html>

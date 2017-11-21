@@ -23,7 +23,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * )
  * @UniqueEntity(fields="slug")
  */
-class Office implements AddressInterface, GeoPointInterface
+class Office implements AddressInterface, GeoPointInterface, \JsonSerializable
 {
     use EntityIdentityTrait;
     use EntityCrudTrait;
@@ -49,6 +49,7 @@ class Office implements AddressInterface, GeoPointInterface
      * @var User[]|Collection|iterable
      *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\User", mappedBy="office")
+     * @ORM\OrderBy({"lastName": "ASC", "firstName": "ASC"})
      */
     private $users;
 
@@ -63,6 +64,17 @@ class Office implements AddressInterface, GeoPointInterface
     {
         $this->users = new ArrayCollection();
         $this->categories = new ArrayCollection();
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'fullName' => $this->getFullName(),
+            'latitude' => $this->getLatitude(),
+            'longitude' => $this->getLongitude(),
+        ];
     }
 
     public function getSlug(): string

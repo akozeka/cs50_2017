@@ -21,9 +21,14 @@ trait EntityPersonNameTrait
         return $this->getFullName();
     }
 
-    public function getFullName(): string
+    public function getFullName(string $delimiter = ' '): string
     {
-        return trim($this->firstName.' '.$this->lastName);
+        return trim("{$this->firstName}{$delimiter}{$this->lastName}");
+    }
+
+    public function getFullNameReversed(string $delimiter = ' '): string
+    {
+        return trim("{$this->lastName}{$delimiter}{$this->firstName}");
     }
 
     public function getFirstName(): string
