@@ -13,19 +13,6 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 class UserRepository extends EntityRepository implements UserLoaderInterface, UserProviderInterface
 {
-    public function loadUserByUsername($username)
-    {
-        $query = $this
-            ->createQueryBuilder('u')
-            ->where('u.email = :username')
-            ->andWhere('u.status = :status')
-            ->setParameter('username', $username)
-            ->setParameter('status', User::ENABLED)
-            ->getQuery();
-
-        return $query->getOneOrNullResult();
-    }
-
     public function refreshUser(UserInterface $user)
     {
         $class = get_class($user);
@@ -49,6 +36,19 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Us
         return $class === User::class;
     }
 
+    public function loadUserByUsername($username)
+    {
+        $query = $this
+            ->createQueryBuilder('u')
+            ->where('u.email = :username')
+            ->andWhere('u.status = :status')
+            ->setParameter('username', $username)
+            ->setParameter('status', User::ENABLED)
+            ->getQuery();
+
+        return $query->getOneOrNullResult();
+    }
+
     public function findByEmail(string $email)
     {
         return $this->findOneBy(['email' => $email]);
@@ -68,17 +68,18 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Us
             ->getResult();
     }
 
-//    public function countActiveUsers(): int
-//    {
-//        $query = $this
-//            ->createQueryBuilder('u')
-//            ->select('COUNT(u.id)')
-//            ->where('u.status = :status')
-//            ->setParameter('status', User::ENABLED)
-//            ->getQuery();
-//
-//        return (int)$query->getSingleScalarResult();
-//    }
+    public function countActiveUsersByOffice(Office $office): int
+    {
+        $qb = $this->createQueryBuilder('u');
+
+        return $qb
+            ->select('COUNT(u.id)')
+            ->where('u.status = :status AND u.office = :office')
+            ->setParameter('status', User::ENABLED)
+            ->setParameter('office', $office)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
 
 //    public function findList(array $ids): UserCollection
 //    {

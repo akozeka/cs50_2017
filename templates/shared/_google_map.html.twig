@@ -1,0 +1,93 @@
+{% set useInfoWindow = useInfoWindow ?? false %}
+<script>
+    var map = null;
+    var markers = [];
+    {% if useInfoWindow %}
+    var infoWindow = null;
+    var infoWindowContentBaseUrl = '{{ path(infoWindowRouteName, {id: null}) }}';
+    {% endif %}
+    var locations = {{ locations|json_encode|raw }};
+
+    function initMap() {
+        var options = {
+            mapTypeId: {{ mapTypeId ?? 'google.maps.MapTypeId.ROADMAP' }},
+            maxZoom: {{ maxZoom ?? 17 }},
+            zoom: {{ zoom ?? 5 }}
+        };
+
+        map = new google.maps.Map(document.getElementById('{{ mapId ?? 'map' }}'), options);
+        {% if useInfoWindow %}
+        infoWindow = new google.maps.InfoWindow();
+        {% endif %}
+        setMarkers();
+    }
+
+    function setMarkers() {
+        var bounds = new google.maps.LatLngBounds();
+
+        for (var i = 0; i < locations.length; i++) {
+            var location = locations[i];
+            if (location.latitude !== null && location.longitude !== null) {
+                addMarker(location);
+                bounds.extend({lat: location.latitude, lng: location.longitude});
+            }
+        }
+
+        if (bounds.isEmpty()) {
+            bounds.extend({lat: 47.0971, lng: 37.5434}); // Mariupol ;)
+        }
+
+        map.fitBounds(bounds);
+    }
+
+    function addMarker(location) {
+        if (location.latitude === null || location.longitude === null) {
+            return null;
+        }
+
+        var marker = new google.maps.Marker({
+            position: {lat: location.latitude, lng: location.longitude},
+            map: map,
+            label: location.name.substr(0, 1)
+        });
+
+        {% if useInfoWindow %}
+        marker.addListener('click', function () {
+            showInfoWindow(marker);
+
+            $.ajax(infoWindowContentBaseUrl + location.id)
+                .done(function (data, textStatus, jqXHR) {
+                    showInfoWindow(marker, data);
+                })
+                .fail(function (jqXHR, textStatus, error) {
+                    console.log(error.toString());
+                    showInfoWindow(marker, '');
+                });
+        });
+        {% endif %}
+
+        markers.push(marker);
+
+        return marker;
+    }
+
+    function removeMarkers() {
+        for (var i = 0; i < markers.length; i++) {
+            markers[i].setMap(null);
+        }
+
+        markers = [];
+    }
+
+    function showInfoWindow(marker, content) {
+        if (typeof(content) === 'undefined') {
+            content = '<img alt="loading" src="{{ asset('images/ajax-loader.gif') }}"/>';
+        }
+
+        var html = '<div id="info-window">' + content + '</div>';
+
+        infoWindow.setContent(html);
+        infoWindow.open(map, marker);
+    }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key }}&callback=initMap" async defer></script>

@@ -7,7 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     {% block meta '' %}
 
-    <title>{% block title %}{% block page_title '' %} | {% block app_title 'CS50_2017' %}{% endblock %}</title>
+    <title>
+        {%- block title -%}
+            {% block page_head_title %}{{ block('page_title') }}{% endblock %} | {% block app_title 'CS50_2017' %}
+        {%- endblock -%}
+    </title>
 
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/bootstrap-theme.min.css') }}">
@@ -34,6 +38,8 @@
             </div>
         {% endfor %}
     {% endfor %}
+
+    <h1>{% block page_title '' %}</h1>
 
     <div class="content">
         {% block content '' %}

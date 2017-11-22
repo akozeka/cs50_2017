@@ -1,17 +1,8 @@
-<h4>{{ office.name }}</h4>
+<h4><a href="{{ path('office_view', {slug: office.slug}) }}" title="Office details">{{ office.name }}</a></h4>
 
 <address>
     <p>{{ officeCountry.name }}</p>
     <p>{{ office.address }}, {{ office.city }} {{ office.country }} {{ office.zipCode }}</p>
 </address>
 
-{% if users is not empty %}
-    <h5>Employees</h5>
-    <ul>
-        {% for user in users %}
-            <li>{{ user.fullNameReversed(', ') }}</li>
-        {% endfor %}
-    </ul>
-{% else %}
-    <p><em>No employees in this office</em></p>
-{% endif %}
+<p><em>Employees: {{ users_count }}</em></p>

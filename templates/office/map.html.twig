@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block page_title 'Offices map' %}
+
+{% block content %}
+    <div id="map"></div>
+{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        #map {
+            width: 100%;
+            height: 600px;
+        }
+    </style>
+{% endblock %}
+
+{% block javascripts %}
+    {% include 'shared/_google_map.html.twig' with {locations: offices, useInfoWindow: true, infoWindowRouteName: 'office_info_window'} %}
+{% endblock %}

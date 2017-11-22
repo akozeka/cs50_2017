@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block page_title 'Office' %}
+
+{% block content %}
+    <div class="actions">
+        <button class="btn btn-primary btn-back">Back</button>
+    </div>
+
+    <h4>{{ office.name }}</h4>
+
+    <div class="row">
+        <div class="col-xs-8">
+            <address>
+                <p><strong>Country:</strong> {{ officeCountry.name }} ({{ office.country }})</p>
+                <p><strong>City:</strong> {{ office.city }}</p>
+                <p><strong>Address:</strong> {{ office.address }}</p>
+                <p><strong>ZIP code:</strong> {{ office.zipCode }}</p>
+            </address>
+
+            {% if users is not empty %}
+                <p><em>Employees:</em></p>
+                <ul>
+                    {% for user in users %}
+                        <li>{{ user.fullNameReversed(', ') }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p><em>No employees in this office</em></p>
+            {% endif %}
+        </div>
+        <div class="col-xs-4">
+            <div id="map"></div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        #map {
+            width: 300px;
+            height: 300px;
+        }
+    </style>
+{% endblock %}
+
+{% block javascripts %}
+    {% include 'shared/_google_map.html.twig' with {locations: [office]} %}
+{% endblock %}

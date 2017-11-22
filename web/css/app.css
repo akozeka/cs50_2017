@@ -59,3 +59,7 @@ ul.status-messages li.error {
     /*margin-top: 9px;*/
     /*border-top: 1px solid #eee;*/
 /*}*/
+
+.btn-back:before {
+    content: "<< ";
+}
