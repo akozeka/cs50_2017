@@ -6,6 +6,7 @@ use AppBundle\Form\ProfileFormType;
 use AppBundle\Utils\Registration;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,12 +18,12 @@ use Symfony\Component\HttpFoundation\Response;
 class ProfileController extends Controller
 {
     /**
-     * @Route("/home", name="user_home")
+     * @Route("/", name="user_home")
      * @Method("GET")
      */
-    public function userHomepageAction()
+    public function userHomeAction()
     {
-        return $this->render('user/home.html.twig');
+        return $this->render('user/home.html.twig', ['user' => $this->getUser()]);
     }
 
     /**
