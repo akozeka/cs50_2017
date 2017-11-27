@@ -71,7 +71,7 @@ class RegistrationHandler
         $this->dispatcher->dispatch(Events::USER_PROFILE_UPDATED, new GenericEvent(['user' => $user]));
     }
 
-    private function encodePassword(string $password): string
+    public function encodePassword(string $password): string
     {
         $encoder = $this->encoders->getEncoder(User::class);
 

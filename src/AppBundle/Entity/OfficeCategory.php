@@ -46,11 +46,33 @@ class OfficeCategory
      */
     private $offices;
 
-    /**
-     * OfficeCategory constructor.
-     */
     public function __construct()
     {
         $this->offices = new ArrayCollection();
+    }
+
+    public function getCode(): string
+    {
+        return $this->code;
+    }
+
+    public function setCode(string $code)
+    {
+        $this->code = $code;
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name)
+    {
+        $this->name = $name;
+    }
+
+    public function getOffices()
+    {
+        return $this->offices;
     }
 }

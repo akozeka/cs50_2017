@@ -6,6 +6,7 @@ AppBundle\Entity\Country:
 AppBundle\Entity\PostAddressEmbeddable:
     postAddress_{1..50}:
         country: '@country_*->code'
+        country: 'UA'
         city: '<city()>'
         address: '<streetAddress()>'
         zipCode: '<postcode()>'

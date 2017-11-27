@@ -37,6 +37,12 @@ class Country
      */
     private $name;
 
+    public function __construct(string $code, string $name)
+    {
+        $this->code = $code;
+        $this->name = $name;
+    }
+
     public function __toString()
     {
         return $this->code;
