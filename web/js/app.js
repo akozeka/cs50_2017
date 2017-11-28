@@ -7,6 +7,7 @@ function initUI() {
         window.history.back();
     });
 
+    // Delete confirmation
     $(document).on('submit', 'form[name="delete_entity"]', function (e) {
         var $form = $(this);
 
@@ -28,4 +29,7 @@ function initUI() {
             })
         ;
     });
+
+    // Searchable select
+    $('select.searchable').chosen();
 }

@@ -27,7 +27,7 @@
 
     <fieldset>
         <legend>Address information</legend>
-        {{ form_row(form.address.country, { label: 'Country:' }) }}
+        {{ form_row(form.address.country, { label: 'Country:', attr: { class: 'searchable' } }) }}
         {{ form_row(form.address.city, { label: 'City:' }) }}
         {{ form_row(form.address.address, { label: 'Address:' }) }}
         {{ form_row(form.address.zipCode, { label: 'ZIP code:' }) }}
@@ -35,7 +35,7 @@
 
     <fieldset>
         <legend>Work office information</legend>
-        {{ form_row(form.office, { label: 'Office:' }) }}
+        {{ form_row(form.office, { label: 'Office:', attr: { class: 'searchable' } }) }}
     </fieldset>
 
     {% if form.conditions is defined %}
