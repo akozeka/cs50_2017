@@ -63,3 +63,29 @@ ul.status-messages li.error {
 .btn-back:before {
     content: "<< ";
 }
+
+.actions {
+    margin: 10px auto;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+table th.actions {
+    width: 1px;
+}
+
+.actions form[name="delete_entity"],
+.actions form[name="delete_entity"] * {
+    display: inline-block;
+    float: none;
+    width: auto;
+    margin: 0;
+}
+
+.actions form[name="delete_entity"] .col-sm-2 {
+    display: none;
+}
+
+.actions form[name="delete_entity"] .col-sm-10 {
+    padding: 0 4px;
+}

@@ -46,35 +46,6 @@ class RegistrationController extends Controller
         ]);
     }
 
-//    /**
-//     * This action is the landing page at the end of the subscription process.
-//     *
-//     * @Route("/inscription/terminee", name="app_membership_complete")
-//     * @Method("GET")
-//     */
-//    public function completeAction(): Response
-//    {
-//        if ($this->getUser()) {
-//            $this->redirectToRoute('app_search_events');
-//        }
-//
-//        $membershipUtils = $this->get('app.membership_utils');
-//
-//        if (!$id = $membershipUtils->getNewAdherentId()) {
-//            throw $this->createNotFoundException('The adherent has not been successfully redirected from the registration page.');
-//        }
-//
-//        if (!$adherent = $this->getDoctrine()->getRepository(Adherent::class)->find($id)) {
-//            throw $this->createNotFoundException('New adherent id not found.');
-//        }
-//
-//        $membershipUtils->clearNewAdherentId();
-//
-//        return $this->render('membership/complete.html.twig', [
-//            'name' => $adherent->getFirstName(),
-//        ]);
-//    }
-
     /**
      * @Route(
      *     path="/registration/activate/{user_id}/{activation_token}",

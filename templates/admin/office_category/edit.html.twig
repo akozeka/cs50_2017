@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block page_title %}{{ isEditForm ? 'Edit' : 'Add' }} office category{% endblock %}
+
+{% block content %}
+    <div class="actions">
+        <button class="btn btn-primary btn-back">Back</button>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-6">
+
+            {{ form_start(form) }}
+
+            {{ form_errors(form) }}
+
+            {{ form_row(form.code, { label: 'Code:' }) }}
+            {{ form_row(form.name, { label: 'Name:' }) }}
+
+            <div class="text-center">
+                {{ form_widget(form.submit, { label: isEditForm ? 'Update' : 'Add', attr: { class: 'btn-primary' } }) }}
+            </div>
+
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

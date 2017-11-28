@@ -24,7 +24,7 @@ security:
             form_login:
                 login_path: security_login
                 check_path: security_login_check
-                default_target_path: user_home
+                default_target_path: home_redirect
                 username_parameter: _email
                 password_parameter: _password
                 remember_me: true

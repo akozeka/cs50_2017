@@ -18,4 +18,20 @@ class HomeController extends Controller
     {
         return $this->render('home/home.html.twig');
     }
+
+    /**
+     * @Route("/home", name="home_redirect")
+     */
+    public function homeRedirectAction()
+    {
+        if ($this->isGranted('ROLE_USER')) {
+            $route = 'user_home';
+        } else if ($this->isGranted('ROLE_ADMIN')) {
+            $route = 'admin_home';
+        } else {
+            $route = 'home';
+        }
+
+        return $this->redirectToRoute($route);
+    }
 }

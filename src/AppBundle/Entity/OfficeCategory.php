@@ -51,7 +51,7 @@ class OfficeCategory
         $this->offices = new ArrayCollection();
     }
 
-    public function getCode(): string
+    public function getCode(): ?string
     {
         return $this->code;
     }
@@ -61,7 +61,7 @@ class OfficeCategory
         $this->code = $code;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
