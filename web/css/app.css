@@ -89,3 +89,7 @@ table th.actions {
 .actions form[name="delete_entity"] .col-sm-10 {
     padding: 0 4px;
 }
+
+.modal-dialog {
+    padding-top: 20%;
+}
