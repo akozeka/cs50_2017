@@ -38,7 +38,7 @@ class AddressType extends AbstractType
                 'query_builder' => function (EntityRepository $repository) {
                     return $repository->createQueryBuilder('c')->orderBy('c.name', 'ASC');
                 },
-                'placeholder' => 'Choose country',
+                'placeholder' => 'Choose country...',
             ])
             ->add('city', TextType::class)
             ->add('address', TextType::class, ['required' => false])

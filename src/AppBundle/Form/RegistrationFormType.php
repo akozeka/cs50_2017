@@ -43,7 +43,7 @@ class RegistrationFormType extends AbstractType
                 'query_builder' => function (EntityRepository $repository) {
                     return $repository->createQueryBuilder('o')->orderBy('o.name', 'ASC');
                 },
-                'placeholder' => 'Choose office',
+                'placeholder' => 'Choose office...',
             ])
             ->add('password', RepeatedType::class, ['type' => PasswordType::class])
             ->add('conditions', CheckboxType::class);

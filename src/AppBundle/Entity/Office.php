@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
@@ -42,6 +43,8 @@ class Office implements AddressInterface, GeoPointInterface, \JsonSerializable
      * @var string
      *
      * @ORM\Column(type="string")
+     *
+     * @Assert\NotBlank()
      */
     private $name;
 
@@ -58,6 +61,8 @@ class Office implements AddressInterface, GeoPointInterface, \JsonSerializable
      *
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\OfficeCategory", inversedBy="offices")
      * @ORM\OrderBy({"name": "ASC"})
+     *
+     * @Assert\Count(min="1", minMessage="Choose at least one category")
      */
     private $categories;
 
