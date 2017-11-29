@@ -32,7 +32,7 @@
             var location = locations[i];
             if (location.latitude !== null && location.longitude !== null) {
                 var latLng = new google.maps.LatLng(location.latitude, location.longitude);
-                addMarker(latLng, location.name ? location.name.substr(0, 1) : '');
+                addMarker(latLng, location.id, location.name ? location.name.substr(0, 1) : '');
                 bounds.extend(latLng);
             }
         }
@@ -44,7 +44,7 @@
         map.fitBounds(bounds);
     }
 
-    function addMarker(latLng, label) {
+    function addMarker(latLng, uniqueId, label) {
         var marker = new google.maps.Marker({
             position: latLng,
             map: map,
@@ -55,7 +55,7 @@
         marker.addListener('click', function () {
             showInfoWindow(marker);
 
-            $.ajax(infoWindowContentBaseUrl + location.id)
+            $.ajax(infoWindowContentBaseUrl + uniqueId)
                 .done(function (data, textStatus, jqXHR) {
                     showInfoWindow(marker, data);
                 })

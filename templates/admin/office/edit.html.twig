@@ -41,7 +41,7 @@
                         <input type="text" id="address" class="form-control">
                     </div>
                     <div class="col-sm-3">
-                        <button id="find-coordinates-btn" class="btn btn-default">Find coordinates</button>
+                        <button type="button" id="find-coordinates-btn" class="btn btn-default">Find coordinates</button>
                     </div>
                 </div>
             </fieldset>
@@ -94,8 +94,8 @@
         function updateMarkerCoordinates(latLng) {
             removeMarkers();
             addMarker(latLng);
-            $('#office_form_coordinates_latitude').val(latLng.lng().toFixed(6));
-            $('#office_form_coordinates_longitude').val(latLng.lat().toFixed(6));
+            $('#office_form_coordinates_latitude').val(latLng.lat().toFixed(6));
+            $('#office_form_coordinates_longitude').val(latLng.lng().toFixed(6));
         }
     </script>
 {% endblock %}
