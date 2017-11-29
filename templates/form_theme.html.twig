@@ -1,1 +1,19 @@
 {% use 'bootstrap_3_horizontal_layout.html.twig' %}
+
+{% block geo_point_row %}
+    <div class="form-group">
+        {{ form_label(form.latitude, 'Latitude:') }}
+
+        <div class="col-sm-4">
+            {{ form_widget(form.latitude) }}
+            {{ form_errors(form.latitude) }}
+        </div>
+
+        {{ form_label(form.longitude, 'Longitude:') }}
+
+        <div class="col-sm-4">
+            {{ form_widget(form.longitude) }}
+            {{ form_errors(form.longitude) }}
+        </div>
+    </div>
+{% endblock %}

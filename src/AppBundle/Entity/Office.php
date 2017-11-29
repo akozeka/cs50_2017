@@ -57,6 +57,7 @@ class Office implements AddressInterface, GeoPointInterface, \JsonSerializable
      * @var OfficeCategory[]|Collection|iterable
      *
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\OfficeCategory", inversedBy="offices")
+     * @ORM\OrderBy({"name": "ASC"})
      */
     private $categories;
 
@@ -64,6 +65,8 @@ class Office implements AddressInterface, GeoPointInterface, \JsonSerializable
     {
         $this->users = new ArrayCollection();
         $this->categories = new ArrayCollection();
+        $this->postAddress = new PostAddressEmbeddable('UA', 'Mariupol', null, null);
+        $this->coordinates = new GeoPointEmbeddable();
     }
 
     public function jsonSerialize()
@@ -77,6 +80,16 @@ class Office implements AddressInterface, GeoPointInterface, \JsonSerializable
         ];
     }
 
+    public function getFullName()
+    {
+        return "$this->name ({$this->getCountry()}, {$this->getCity()}, {$this->getZipCode()})";
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
     public function getSlug(): string
     {
         return $this->slug;
@@ -87,11 +100,6 @@ class Office implements AddressInterface, GeoPointInterface, \JsonSerializable
         $this->slug = $slug;
 
         return $this;
-    }
-
-    public function getFullName()
-    {
-        return "$this->name ({$this->getCountry()}, {$this->getCity()}, {$this->getZipCode()})";
     }
 
     public function addCategory(OfficeCategory $category): void

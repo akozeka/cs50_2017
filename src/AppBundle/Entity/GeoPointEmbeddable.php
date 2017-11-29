@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Embeddable
  */
-class GeoPointEmbeddable implements GeoPointInterface
+class GeoPointEmbeddable implements GeoPointInterface, \JsonSerializable
 {
     /**
      * @ORM\Column(type="float", nullable=true)
@@ -19,6 +19,14 @@ class GeoPointEmbeddable implements GeoPointInterface
      * @ORM\Column(type="float", nullable=true)
      */
     private $longitude;
+
+    public function jsonSerialize()
+    {
+        return [
+            'latitude' => $this->latitude,
+            'longitude' => $this->longitude,
+        ];
+    }
 
     public function getLatitude(): ?float
     {

@@ -1,0 +1,101 @@
+{% extends 'base.html.twig' %}
+
+{% block page_title %}{{ isEditForm ? 'Edit' : 'Add' }} office{% endblock %}
+
+{% block content %}
+    <div class="actions">
+        <button class="btn btn-primary btn-back">Back</button>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-8">
+            {{ form_start(form) }}
+
+            {{ form_errors(form) }}
+
+            <fieldset>
+                <legend>General information</legend>
+                {{ form_row(form.categories, { label: 'Categories:' }) }}
+                {{ form_row(form.name, { label: 'Name:' }) }}
+            </fieldset>
+
+            <fieldset>
+                <legend>Address information</legend>
+                {{ form_row(form.postAddress.country, { label: 'Country:', attr: { class: 'searchable' } }) }}
+                {{ form_row(form.postAddress.city, { label: 'City:' }) }}
+                {{ form_row(form.postAddress.address, { label: 'Address:' }) }}
+                {{ form_row(form.postAddress.zipCode, { label: 'ZIP code:' }) }}
+            </fieldset>
+
+            <fieldset>
+                <legend>Location information</legend>
+                <div class="form-group">
+                    <div id="map"></div>
+                </div>
+
+                {{ form_row(form.coordinates) }}
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Address:</label>
+                    <div class="col-sm-7">
+                        <input type="text" id="address" class="form-control">
+                    </div>
+                    <div class="col-sm-3">
+                        <button id="find-coordinates-btn" class="btn btn-default">Find coordinates</button>
+                    </div>
+                </div>
+            </fieldset>
+
+            <div class="text-center">
+                {{ form_widget(form.submit, { label: isEditForm ? 'Update' : 'Add', attr: { class: 'btn-primary' } }) }}
+            </div>
+
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        #map {
+            width: 100%;
+            height: 300px;
+        }
+    </style>
+{% endblock %}
+
+{% block javascripts %}
+    {% embed 'shared/_google_map.html.twig' with {locations: [form.coordinates.vars.value]} %}
+        {% block map_init_script  %}
+            {{ parent() }}
+
+            google.maps.event.addListener(map, 'click', function(e) {
+                updateMarkerCoordinates(e.latLng);
+            });
+        {% endblock %}
+    {% endembed  %}
+
+    <script>
+        $('#find-coordinates-btn').click(function() {
+            var geocoder = new google.maps.Geocoder();
+
+            geocoder.geocode({ 'address': $('#address').val() }, function(results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    var latLng = results[0].geometry.location;
+                    updateMarkerCoordinates(latLng);
+                    map.setCenter(latLng);
+                    map.setZoom(17);
+                } else {
+                    eModal.alert('Could not find coordinates. Reason: ' + status, 'Error');
+                }
+            });
+        });
+
+        function updateMarkerCoordinates(latLng) {
+            removeMarkers();
+            addMarker(latLng);
+            $('#office_form_coordinates_latitude').val(latLng.lng().toFixed(6));
+            $('#office_form_coordinates_longitude').val(latLng.lat().toFixed(6));
+        }
+    </script>
+{% endblock %}

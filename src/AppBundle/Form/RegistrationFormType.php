@@ -58,7 +58,6 @@ class RegistrationFormType extends AbstractType
             'validation_groups' => ['Default', 'Registration'],
             'allow_extra_fields' => true, // reCaptcha
             'years' => array_combine($years, $years),
-            'attr' => ['novalidate' => 'novalidate'],
         ]);
     }
 

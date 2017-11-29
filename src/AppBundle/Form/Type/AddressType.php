@@ -3,6 +3,7 @@
 namespace AppBundle\Form\Type;
 
 use AppBundle\Entity\Country;
+use AppBundle\Entity\PostAddressEmbeddable;
 use AppBundle\Utils\Geo\Address;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -47,7 +48,8 @@ class AddressType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Address::class,
+//            'data_class' => Address::class,
+            'data_class' => PostAddressEmbeddable::class,
             'error_bubbling' => false,
         ]);
     }
