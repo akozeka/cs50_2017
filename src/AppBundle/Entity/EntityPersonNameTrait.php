@@ -26,7 +26,7 @@ trait EntityPersonNameTrait
         return trim("{$this->firstName}{$delimiter}{$this->lastName}");
     }
 
-    public function getFullNameReversed(string $delimiter = ' '): string
+    public function getFullNameReversed(string $delimiter = ', '): string
     {
         return trim("{$this->lastName}{$delimiter}{$this->firstName}");
     }

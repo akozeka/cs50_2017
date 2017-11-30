@@ -20,6 +20,11 @@
             </fieldset>
 
             <fieldset>
+                <legend>Employees information</legend>
+                {{ form_row(form.users, { label: 'Employees to add:' }) }}
+            </fieldset>
+
+            <fieldset>
                 <legend>Address information</legend>
                 {{ form_row(form.postAddress.country, { label: 'Country:', attr: { class: 'searchable' } }) }}
                 {{ form_row(form.postAddress.city, { label: 'City:' }) }}

@@ -81,17 +81,15 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Us
             ->getSingleScalarResult();
     }
 
-//    public function findList(array $ids): UserCollection
-//    {
-//        if (empty($ids)) {
-//            return new UserCollection();
-//        }
-//
-//        $qb = $this->createQueryBuilder('u');
-//        $query = $qb
-//            ->where($qb->expr()->in('u.id', $ids))
-//            ->getQuery();
-//
-//        return new UserCollection($query->getResult());
-//    }
+    public function createActiveUsersWithoutOfficeQB()
+    {
+        $qb = $this->createQueryBuilder('u');
+
+        return $qb
+            ->where('u.role = :role AND u.status = :status AND u.office IS NULL')
+            ->setParameter('role', User::ROLE_USER)
+            ->setParameter('status', User::ENABLED)
+            ->addOrderBy('u.lastName', 'ASC')
+            ->addOrderBy('u.firstName', 'ASC');
+    }
 }

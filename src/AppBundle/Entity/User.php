@@ -81,6 +81,7 @@ class User implements UserInterface, AddressInterface
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Office", inversedBy="users")
+     * @ORM\JoinColumn(onDelete="SET NULL")
      */
     private $office;
 
@@ -220,6 +221,11 @@ class User implements UserInterface, AddressInterface
     public function getOffice(): ?Office
     {
         return $this->office;
+    }
+
+    public function setOffice(?Office $office): void
+    {
+        $this->office = $office;
     }
 
     public function equals(self $other): bool

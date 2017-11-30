@@ -4,6 +4,7 @@ namespace AppBundle\Form;
 
 use AppBundle\Entity\Office;
 use AppBundle\Entity\OfficeCategory;
+use AppBundle\Entity\User;
 use AppBundle\Form\Type\AddressType;
 use AppBundle\Form\Type\GeoPointType;
 use Doctrine\ORM\EntityRepository;
@@ -27,6 +28,17 @@ class OfficeFormType extends AbstractType
                 },
                 'multiple' => true,
                 'expanded' => true,
+            ])
+            ->add('users', EntityType::class, [
+                'class' => User::class,
+                'choice_label' => 'fullNameReversed',
+                'query_builder' => function (EntityRepository $repository) {
+                    return $repository->createActiveUsersWithoutOfficeQB();
+                },
+                'required' => false,
+                'multiple' => true,
+                'expanded' => true,
+                'by_reference' => false,
             ])
             ->add('name', TextType::class)
             ->add('postAddress', AddressType::class)

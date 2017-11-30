@@ -68,10 +68,10 @@ class Office implements AddressInterface, GeoPointInterface, \JsonSerializable
 
     public function __construct()
     {
-        $this->users = new ArrayCollection();
-        $this->categories = new ArrayCollection();
         $this->postAddress = new PostAddressEmbeddable('UA', 'Mariupol', null, null);
         $this->coordinates = new GeoPointEmbeddable();
+        $this->users = new ArrayCollection();
+        $this->categories = new ArrayCollection();
     }
 
     public function jsonSerialize()
@@ -105,6 +105,25 @@ class Office implements AddressInterface, GeoPointInterface, \JsonSerializable
         $this->slug = $slug;
 
         return $this;
+    }
+
+    public function getUsers()
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): void
+    {
+        if (!$this->users->contains($user)) {
+            $user->setOffice($this);
+            $this->users[] = $user;
+        }
+    }
+
+    public function removeUser(User $user): void
+    {
+        $user->setOffice(null);
+        $this->users->removeElement($user);
     }
 
     public function addCategory(OfficeCategory $category): void
