@@ -31,9 +31,13 @@ class OfficeFormType extends AbstractType
             ])
             ->add('users', EntityType::class, [
                 'class' => User::class,
-                'choice_label' => 'fullNameReversed',
+                'choice_label' => function (User $user) {
+                    $office = $user->getOffice();
+
+                    return $user->getFullNameReversed().($office === null ? ' (Not employeed)' : '');
+                },
                 'query_builder' => function (EntityRepository $repository) {
-                    return $repository->createActiveUsersWithoutOfficeQB();
+                    return $repository->createActiveUsersQB();
                 },
                 'required' => false,
                 'multiple' => true,

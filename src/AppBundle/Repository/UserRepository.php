@@ -38,15 +38,14 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Us
 
     public function loadUserByUsername($username)
     {
-        $query = $this
-            ->createQueryBuilder('u')
-            ->where('u.email = :username')
-            ->andWhere('u.status = :status')
+        $qb = $this->createQueryBuilder('u');
+
+        return $qb
+            ->where('u.email = :username AND u.status = :status')
             ->setParameter('username', $username)
             ->setParameter('status', User::ENABLED)
-            ->getQuery();
-
-        return $query->getOneOrNullResult();
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 
     public function findByEmail(string $email)
@@ -56,11 +55,10 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Us
 
     public function findActiveUsersByOffice(Office $office): array
     {
-        $qb = $this->createQueryBuilder('u');
+        $qb = $this->createActiveUsersQB();
 
         return $qb
-            ->where('u.status = :status AND u.office = :office')
-            ->setParameter('status', User::ENABLED)
+            ->andWhere('u.office = :office')
             ->setParameter('office', $office)
             ->addOrderBy('u.lastName', 'ASC')
             ->addOrderBy('u.firstName', 'ASC')
@@ -70,23 +68,22 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Us
 
     public function countActiveUsersByOffice(Office $office): int
     {
-        $qb = $this->createQueryBuilder('u');
+        $qb = $this->createActiveUsersQB();
 
         return $qb
             ->select('COUNT(u.id)')
-            ->where('u.status = :status AND u.office = :office')
-            ->setParameter('status', User::ENABLED)
+            ->andWhere('u.office = :office')
             ->setParameter('office', $office)
             ->getQuery()
             ->getSingleScalarResult();
     }
 
-    public function createActiveUsersWithoutOfficeQB()
+    public function createActiveUsersQB()
     {
         $qb = $this->createQueryBuilder('u');
 
         return $qb
-            ->where('u.role = :role AND u.status = :status AND u.office IS NULL')
+            ->where('u.role = :role AND u.status = :status')
             ->setParameter('role', User::ROLE_USER)
             ->setParameter('status', User::ENABLED)
             ->addOrderBy('u.lastName', 'ASC')
