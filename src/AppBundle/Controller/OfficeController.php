@@ -16,12 +16,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class OfficeController extends Controller
 {
     /**
-     * @Route("/", name="office")
+     * @Route("/", name="office_list")
      * @Method("GET")
      */
     public function officeAction()
     {
-        return $this->redirectToRoute('office_map');
+        $offices = $this->getDoctrine()->getRepository(Office::class)->findBy([], ['name' => 'ASC']);
+
+        return $this->render('office/list.html.twig', ['offices' => $offices]);
     }
 
     /**
@@ -36,18 +38,7 @@ class OfficeController extends Controller
     }
 
     /**
-     * @Route("/list", name="office_list")
-     * @Method("GET")
-     */
-    public function officeListAction()
-    {
-        $offices = $this->getDoctrine()->getRepository(Office::class)->findBy([], ['name' => 'ASC']);
-
-        return $this->render('office/list.html.twig', ['offices' => $offices]);
-    }
-
-    /**
-     * @Route("/view/{slug}", name="office_view")
+     * @Route("/{slug}", name="office_view")
      *
      * @Method("GET")
      * @Entity("office", expr="repository.findOneBy({slug: slug})")
