@@ -12,8 +12,9 @@
             <thead>
             <tr>
                 <th>ID</th>
-                <th>Name</th>
                 <th>Categories</th>
+                <th>Name</th>
+                <th>Address</th>
                 <th>Employees</th>
                 <th class="actions"></th>
             </tr>
@@ -22,13 +23,16 @@
             {% for office in offices %}
                 <tr>
                     <td>{{ office.id }}</td>
-                    <td>{{ office.name }}</td>
                     <td>
                         <ul>
                         {% for category in office.categories %}
                             <li>{{ category.name }}</li>
                         {% endfor %}
                         </ul>
+                    </td>
+                    <td>{{ office.name }}</td>
+                    <td>
+                        {{ office.city }}, {{ office.address }}, {{ office.country }} {{ office.zipCode }}
                     </td>
                     <td>
                         {% if office.users is not empty %}
