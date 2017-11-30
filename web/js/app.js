@@ -32,4 +32,7 @@ function initUI() {
 
     // Searchable select
     $('select.searchable').chosen();
+
+    // Fix dropdown menu
+    $('.dropdown-menu > li.active').removeClass('active');
 }

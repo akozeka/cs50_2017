@@ -55,11 +55,6 @@ ul.status-messages li.error {
     color: red;
 }
 
-/*footer {*/
-    /*margin-top: 9px;*/
-    /*border-top: 1px solid #eee;*/
-/*}*/
-
 .btn-back:before {
     content: "<< ";
 }

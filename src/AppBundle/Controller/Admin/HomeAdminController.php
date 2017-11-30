@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 class HomeAdminController extends Controller
 {
     /**
-     * @Route("/", name="admin_home")
+     * @Route("/home", name="admin_home")
      */
     public function homeAction()
     {
