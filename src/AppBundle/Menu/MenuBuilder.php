@@ -31,7 +31,10 @@ class MenuBuilder implements ContainerAwareInterface
 
         $menu->setChildrenAttribute('class', 'nav navbar-nav');
         $menu->addChild('Home', ['route' => 'user_home']);
-        $menu->addChild('Offices', ['route' => 'office_list']);
+        $menu->addChild('Offices', ['route' => 'office_list'])->setAttribute('dropdown', true);
+
+        $menu['Offices']->addChild('Offices map', ['route' => 'office_map']);
+        $menu['Offices']->addChild('Offices list', ['route' => 'office_list']);
 
         return $menu;
     }
