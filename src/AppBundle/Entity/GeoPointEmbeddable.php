@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use AppBundle\Utils\Geo\GeoPointInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Embeddable
@@ -12,11 +13,18 @@ class GeoPointEmbeddable implements GeoPointInterface, \JsonSerializable
 {
     /**
      * @ORM\Column(type="float", nullable=true)
+     *
+     * @Assert\Type("float")
+     * @Assert\GreaterThanOrEqual(value="-90")
+     * @Assert\LessThanOrEqual(value="90")
      */
     private $latitude;
 
     /**
      * @ORM\Column(type="float", nullable=true)
+     *
+     * @Assert\GreaterThanOrEqual(value="-180")
+     * @Assert\LessThanOrEqual(value="180")
      */
     private $longitude;
 

@@ -85,9 +85,17 @@ class Office implements AddressInterface, GeoPointInterface, \JsonSerializable
         ];
     }
 
-    public function getFullName()
+    public function getFullName(): string
     {
-        return "$this->name ({$this->getCountry()}, {$this->getCity()}, {$this->getZipCode()})";
+        return
+            "$this->name ({$this->getCountry()}, {$this->getCity()}" .
+            (empty($this->getZipCode()) ? '' : ", {$this->getZipCode()}") .
+            ')';
+    }
+
+    public function getFullAddress(): string
+    {
+        return $this->postAddress->getFullAddress();
     }
 
     public function getName(): ?string

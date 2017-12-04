@@ -31,9 +31,7 @@
                         </ul>
                     </td>
                     <td>{{ office.name }}</td>
-                    <td>
-                        {{ office.city }}, {{ office.address }}, {{ office.country }} {{ office.zipCode }}
-                    </td>
+                    <td>{{ office.fullAddress }}</td>
                     <td>
                         {% if office.users is not empty %}
                             <ul>

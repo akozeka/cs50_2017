@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use AppBundle\Utils\Geo\AddressInterface;
 use Doctrine\ORM\Mapping as ORM;
 
+
 /**
  * @ORM\Embeddable
  */
@@ -111,5 +112,13 @@ class PostAddressEmbeddable implements AddressInterface
         $this->zipCode = $zipCode;
 
         return $this;
+    }
+
+    public function getFullAddress(): string
+    {
+        return
+            "{$this->country}, {$this->city}" .
+            (empty($this->address) ? '' : ", {$this->address}") .
+            (empty($this->zipCode) ? '' : ", {$this->zipCode}");
     }
 }

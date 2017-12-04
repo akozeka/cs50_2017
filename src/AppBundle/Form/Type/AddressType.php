@@ -17,13 +17,17 @@ class AddressType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $zipCode = $builder->create('zipCode', TextType::class, ['required' => false]);
+        $zipCode = $builder->create('zipCode', TextType::class, ['required' => false, 'empty_data' => null]);
 
         $zipCode->addModelTransformer(new CallbackTransformer(
             function ($data) {
                 return $data;
             },
             function ($value) {
+                if (empty($value)) {
+                    return null;
+                }
+
                 return str_replace(' ', '', $value);
             }
         ));
@@ -41,7 +45,7 @@ class AddressType extends AbstractType
                 'placeholder' => 'Choose country...',
             ])
             ->add('city', TextType::class)
-            ->add('address', TextType::class, ['required' => false])
+            ->add('address', TextType::class, ['required' => false, 'empty_data' => null])
             ->add($zipCode);
     }
 

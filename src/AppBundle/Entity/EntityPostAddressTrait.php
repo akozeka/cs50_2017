@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 trait EntityPostAddressTrait
 {
@@ -10,6 +11,8 @@ trait EntityPostAddressTrait
      * @var PostAddressEmbeddable
      *
      * @ORM\Embedded(class="AppBundle\Entity\PostAddressEmbeddable", columnPrefix=false)
+     *
+     * @Assert\Valid()
      */
     private $postAddress;
 

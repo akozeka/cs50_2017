@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 trait EntityGeoPointTrait
 {
@@ -10,6 +11,8 @@ trait EntityGeoPointTrait
      * @var GeoPointEmbeddable
      *
      * @ORM\Embedded(class="AppBundle\Entity\GeoPointEmbeddable", columnPrefix=false)
+     *
+     * @Assert\Valid()
      */
     private $coordinates;
 
