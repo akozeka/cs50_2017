@@ -13,8 +13,8 @@ namespace AppBundle\Twig;
 
 use AppBundle\AppBundle;
 use AppBundle\Form\Type\DeleteEntityType;
-use Symfony\Bridge\Twig\Form\TwigRenderer;
 use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Form\FormRenderer;
 use Twig\Environment;
 
 class FormRuntime
@@ -32,7 +32,7 @@ class FormRuntime
         string $tokenId = AppBundle::DELETE_FORM_TOKEN
     ): string {
         return $env
-            ->getRuntime(TwigRenderer::class)
+            ->getRuntime(FormRenderer::class)
             ->renderBlock(
                 $this->formFactory->create(
                     DeleteEntityType::class,
