@@ -44,10 +44,10 @@ class RegistrationHandler
             User::ROLE_USER,
             User::DISABLED,
             new PostAddressEmbeddable(
-                $registration->getAddress()->getCountry(),
-                $registration->getAddress()->getCity(),
-                $registration->getAddress()->getAddress(),
-                $registration->getAddress()->getZipCode()
+                $registration->getCountry(),
+                $registration->getCity(),
+                $registration->getAddress(),
+                $registration->getZipCode()
             )
         );
         $this->manager->persist($user);

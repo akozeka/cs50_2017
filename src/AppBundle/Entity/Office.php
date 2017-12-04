@@ -68,7 +68,7 @@ class Office implements AddressInterface, GeoPointInterface, \JsonSerializable
 
     public function __construct()
     {
-        $this->postAddress = new PostAddressEmbeddable('UA', 'Mariupol', null, null);
+        $this->postAddress = new PostAddressEmbeddable('UA', 'Mariupol');
         $this->coordinates = new GeoPointEmbeddable();
         $this->users = new ArrayCollection();
         $this->categories = new ArrayCollection();

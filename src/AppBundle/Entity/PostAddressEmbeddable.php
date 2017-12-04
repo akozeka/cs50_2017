@@ -39,7 +39,7 @@ class PostAddressEmbeddable implements AddressInterface
      */
     private $zipCode;
 
-    public function __construct(string $country, string $city, ?string $address, ?string $zipCode)
+    public function __construct(string $country, string $city, ?string $address = null, ?string $zipCode = null)
     {
         $this->country = $country;
         $this->city = $city;

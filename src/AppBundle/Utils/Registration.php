@@ -2,10 +2,12 @@
 
 namespace AppBundle\Utils;
 
+use AppBundle\Entity\EntityPostAddressTrait;
+use AppBundle\Entity\PostAddressEmbeddable;
 use AppBundle\Entity\User;
-use AppBundle\Utils\Geo\Address;
 use AppBundle\Utils\ValueObject\Genders;
 use AppBundle\Validator\UniqueRegistration as AssertUniqueRegistration;
+use AppBundle\Validator\Recaptcha as AssertRecaptcha;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -13,6 +15,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Registration implements RegistrationInterface
 {
+    use EntityPostAddressTrait;
+
     /**
      * @Assert\NotBlank
      * @Assert\Email
@@ -47,13 +51,6 @@ class Registration implements RegistrationInterface
     public $lastName = '';
 
     /**
-     * @Assert\Valid
-     *
-     * @var Address
-     */
-    public $address = null;
-
-    /**
      * @Assert\NotBlank(groups="Registration")
      * @Assert\Length(min=6, groups={"Registration"})
      */
@@ -70,20 +67,17 @@ class Registration implements RegistrationInterface
      */
     public $birthdate = null;
 
-    /**
-     * @Assert\NotNull
-     */
     public $office = null;
 
-//    /**
-//     * @Assert\NotBlank(groups="Registration")
-//     * @AssertRecaptcha(groups={"Registration"})
-//     */
+    /**
+     * @Assert\NotBlank(groups="Registration")
+     * @AssertRecaptcha(groups={"Registration"})
+     */
     public $recaptcha = null;
 
     public function __construct()
     {
-        $this->address = new Address();
+        $this->postAddress = new PostAddressEmbeddable('UA', 'Mariupol');
     }
 
     public static function createWithRecaptcha(string $recaptchaAnswer = null): self
@@ -102,7 +96,7 @@ class Registration implements RegistrationInterface
         $dto->firstName = $user->getFirstName();
         $dto->lastName = $user->getLastName();
         $dto->birthdate = $user->getBirthdate();
-        $dto->address = Address::createFromAddress($user->getPostAddress());
+        $dto->postAddress = $user->getPostAddress();
         $dto->office = $user->getOffice();
 
         return $dto;
@@ -126,16 +120,6 @@ class Registration implements RegistrationInterface
     public function setBirthdate(?\DateTime $birthdate = null): void
     {
         $this->birthdate = $birthdate;
-    }
-
-    public function getAddress(): ?Address
-    {
-        return $this->address;
-    }
-
-    public function setAddress(?Address $address = null): void
-    {
-        $this->address = $address;
     }
 
     public function getGender()
@@ -167,5 +151,4 @@ class Registration implements RegistrationInterface
     {
         return $this->conditions;
     }
-
 }

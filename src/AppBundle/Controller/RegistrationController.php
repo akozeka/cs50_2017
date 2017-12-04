@@ -9,7 +9,6 @@ use AppBundle\Utils\Registration;
 use GuzzleHttp\Exception\ConnectException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -34,7 +33,7 @@ class RegistrationController extends Controller
                 $this->get('app.registration_handler')->handle($registration);
                 $this->addFlash('info', 'User registered, please wait for activation e-mail and click activation link in it.');
 
-                return $this->redirectToRoute('homepage');
+                return $this->redirectToRoute('security_login');
             }
         } catch (ConnectException $e) {
             $this->addFlash('error', 'Recaptcha error!');
@@ -62,7 +61,7 @@ class RegistrationController extends Controller
     public function activateAction(User $user, UserActivationToken $activationToken): Response
     {
         if ($this->getUser()) {
-            return $this->redirectToRoute('homepage');
+            return $this->redirectToRoute('home');
         }
 
         try {

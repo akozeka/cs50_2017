@@ -36,7 +36,7 @@ class RegistrationFormType extends AbstractType
                     'day' => 'DD',
                 ],
             ])
-            ->add('address', AddressType::class)
+            ->add('postAddress', AddressType::class)
             ->add('office', EntityType::class, [
                 'class' => Office::class,
                 'choice_label' => 'fullName',
@@ -44,6 +44,7 @@ class RegistrationFormType extends AbstractType
                     return $repository->createQueryBuilder('o')->orderBy('o.name', 'ASC');
                 },
                 'placeholder' => 'Choose office...',
+                'required' => false,
             ])
             ->add('password', RepeatedType::class, ['type' => PasswordType::class])
             ->add('conditions', CheckboxType::class);

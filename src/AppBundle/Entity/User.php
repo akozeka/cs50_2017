@@ -196,11 +196,13 @@ class User implements UserInterface, AddressInterface
         $this->gender = $registration->gender;
         $this->birthdate = $registration->getBirthdate();
 
-        $address = $registration->getAddress();
+        $address = $registration->getPostAddress();
 
         if (!$this->postAddress->equals($address)) {
             $this->postAddress = PostAddressEmbeddable::createFromAddress($address);
         }
+
+        $this->office = $registration->getOffice();
     }
 
     public function isEnabled(): bool

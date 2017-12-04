@@ -3,15 +3,16 @@
 {% block page_title 'My profile' %}
 
 {% block content %}
-    <h4>{{ user.fullname }}</h4>
+    <h4>{{ user.fullName }}</h4>
 
     <div><strong>E-mail:</strong> {{ user.email }}</div>
     <div><strong>Gender:</strong> {{ user.gender == 'male' ? 'Male' : 'Female' }}</div>
     <div><strong>Birthdate:</strong> {{ user.birthdate|date('d.m.Y') }} (age: {{ user.age }})</div>
-    <div><strong>Address:</strong> {{ user.country }}, {{ user.city }} {{ user.address }}, {{ user.zipCode }}</div>
+    <div><strong>Address:</strong> {{ user.country }}, {{ user.city }} {{ user.address }} {{ user.zipCode }}</div>
     <div><strong>Work office:</strong> {{ user.office == null ? '---' : user.office.fullName }}</div>
-
     <div><em>User since {{ user.activatedAt|date('d.m.Y H:i:s') }}</em></div>
 
-    <a href="{{ path('user_edit') }}" class="btn btn-default">Edit profile</a>
+    <div class="actions">
+        <a href="{{ path('user_edit') }}" class="btn btn-default">Edit profile</a>
+    </div>
 {% endblock %}
