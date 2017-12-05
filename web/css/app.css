@@ -88,3 +88,7 @@ table th.actions {
 .modal-dialog {
     padding-top: 20%;
 }
+
+.login-state {
+    padding: 5px;
+}
