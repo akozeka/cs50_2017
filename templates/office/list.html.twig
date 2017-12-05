@@ -3,12 +3,21 @@
 {% block page_title 'Offices list' %}
 
 {% block content %}
-    {% if offices is not empty %}
+    {% if officePagination.totalItemCount > 0 %}
         <ul>
-            {% for office in offices %}
-                <li><a href="{{ path('office_view', {slug: office.slug}) }}" title="View office">{{ office.fullName }}</a></li>
+            {% for office in officePagination %}
+                <li>
+                    <a href="{{ path('office_view', {slug: office.slug}) }}"
+                       title="View office">{{ office.fullName }}</a>
+                </li>
             {% endfor %}
         </ul>
+
+        {{ knp_pagination_render(officePagination) }}
+
+        <div class="total">
+            {{ officePagination.totalItemCount }} offices
+        </div>
     {% else %}
         <em>No offices</em>
     {% endif %}

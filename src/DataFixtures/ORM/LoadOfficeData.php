@@ -11,9 +11,11 @@ class LoadOfficeData extends Fixture
     public function load(ObjectManager $manager)
     {
         $officeCategoriesInfo = [
-            'RD' => 'Research & Development',
-            'PR' => 'Production',
+            'CS' => 'Consulting',
             'HR' => 'Human Resources',
+            'SM' => 'Social Media Marketing',
+            'SE' => 'Software Engineering',
+            'WD' => 'Web Development',
         ];
 
         foreach ($officeCategoriesInfo as $officeCategoryCode => $officeCategoryName) {

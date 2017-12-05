@@ -23,11 +23,25 @@ class OfficeAdminController extends Controller
      * @Route("/", name="admin_office_list")
      * @Method("GET")
      */
-    public function officeListAction()
+    public function officeListAction(Request $request)
     {
-        $offices = $this->getDoctrine()->getRepository(Office::class)->findBy([], ['name' => 'ASC']);
+        return $this->render('admin/office/list.html.twig', [
+            'officePagination' => $this->get('knp_paginator')->paginate(
+                $this->getDoctrine()->getRepository(Office::class)->createOfficesSortedQB(),
+                $request->query->getInt('page', 1),
+                5,
+                ['defaultSortFieldName' => 'o.name', 'defaultSortDirection' => 'asc']
+            )
+        ]);
+    }
 
-        return $this->render('admin/office/list.html.twig', ['offices' => $offices]);
+    /**
+     * @Route("/map", name="admin_office_map")
+     * @Method("GET")
+     */
+    public function officeMapAction()
+    {
+        return $this->forward('AppBundle:Office:officeMap');
     }
 
     /**
@@ -43,8 +57,7 @@ class OfficeAdminController extends Controller
 
         $office = $isEditForm ?
             $manager->getRepository(Office::class)->find($id) :
-            new Office()
-        ;
+            new Office();
 
         $form = $this->createForm(OfficeFormType::class, $office);
 
@@ -107,8 +120,7 @@ class OfficeAdminController extends Controller
 
         $category = $isEditForm ?
             $manager->getRepository(OfficeCategory::class)->find($id) :
-            new OfficeCategory()
-        ;
+            new OfficeCategory();
 
         $form = $this->createForm(OfficeCategoryFormType::class, $category);
 

@@ -1,33 +1,40 @@
 {% extends 'base.html.twig' %}
 
-{% block page_title 'Offices' %}
+{% block page_title 'Offices list' %}
 
 {% block content %}
     <div class="actions">
         <a href="{{ path('admin_office_add') }}" class="btn btn-primary">Add office</a>
     </div>
 
-    {% if offices is not empty %}
+    {% if officePagination.totalItemCount > 0 %}
         <table class="table table-striped table-bordered table-hover">
             <thead>
             <tr>
-                <th>ID</th>
+                <th>
+                    {{ knp_pagination_sortable(officePagination, 'ID', 'o.id') }}
+                    {% if officePagination.isSorted('o.id') %}<i class="glyphicon glyphicon-sort"></i>{% endif %}
+                </th>
                 <th>Categories</th>
-                <th>Name</th>
+                <th>
+                    {{ knp_pagination_sortable(officePagination, 'Name', 'o.name') }}
+                    {% if officePagination.isSorted('o.name') %}<i class="glyphicon glyphicon-sort"></i>{% endif %}
+                </th>
                 <th>Address</th>
                 <th>Employees</th>
                 <th class="actions"></th>
             </tr>
             </thead>
-            <tbody>
-            {% for office in offices %}
+
+            {% for office in officePagination %}
+                <tbody>
                 <tr>
                     <td>{{ office.id }}</td>
                     <td>
                         <ul>
-                        {% for category in office.categories %}
-                            <li>{{ category.name }}</li>
-                        {% endfor %}
+                            {% for category in office.categories %}
+                                <li>{{ category.name }}</li>
+                            {% endfor %}
                         </ul>
                     </td>
                     <td>{{ office.name }}</td>
@@ -46,11 +53,15 @@
                         {{ delete_form(path('admin_office_delete', { id: office.id })) }}
                     </td>
                 </tr>
+                </tbody>
             {% endfor %}
-            </tbody>
         </table>
 
-        <div class="total">{{ offices|length }} offices</div>
+        {{ knp_pagination_render(officePagination) }}
+
+        <div class="total">
+            {{ officePagination.totalItemCount }} offices
+        </div>
     {% else %}
         <p>No offices</p>
     {% endif %}

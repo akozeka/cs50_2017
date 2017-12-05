@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @Route("/office")
@@ -19,11 +20,16 @@ class OfficeController extends Controller
      * @Route("/", name="office_list")
      * @Method("GET")
      */
-    public function officeAction()
+    public function officeListAction(Request $request)
     {
-        $offices = $this->getDoctrine()->getRepository(Office::class)->findBy([], ['name' => 'ASC']);
-
-        return $this->render('office/list.html.twig', ['offices' => $offices]);
+        return $this->render('office/list.html.twig', [
+            'officePagination' => $this->get('knp_paginator')->paginate(
+                $this->getDoctrine()->getRepository(Office::class)->createOfficesSortedQB(),
+                $request->query->getInt('page', 1),
+                5,
+                ['defaultSortFieldName' => 'o.name', 'defaultSortDirection' => 'asc']
+            )
+        ]);
     }
 
     /**
