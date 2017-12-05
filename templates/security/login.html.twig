@@ -5,7 +5,7 @@
 {% block content %}
     <main>
         <div class="row">
-            <form action="{{ path('security_login_check') }}" method="post" class="col-xs-3 text-center">
+            <form action="{{ path('security_login_check') }}" method="post" class="col-sm-3 text-center">
 
                 {{ form_errors(form) }}
 
@@ -30,11 +30,11 @@
                 {{ form_rest(form) }}
 
                 <button type="submit" class="btn btn-primary">Login</button>
+
+                <p>Not registered yet?</p>
+
+                <a href="{{ path('register') }}" class="btn btn-default">Register</a>
             </form>
         </div>
-
-        <p>Not registered yet?</p>
-
-        <a href="{{ path('register') }}" class="btn btn-default">Register</a>
     </main>
 {% endblock %}

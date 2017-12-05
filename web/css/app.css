@@ -36,6 +36,10 @@ footer {
     text-align: center;
 }
 
+label.control-label.required {
+    white-space: nowrap;
+}
+
 label.control-label.required:after {
     color: red;
     margin-right: -9px;
