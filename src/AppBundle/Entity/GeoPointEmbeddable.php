@@ -12,16 +12,15 @@ use Symfony\Component\Validator\Constraints as Assert;
 class GeoPointEmbeddable implements GeoPointInterface, \JsonSerializable
 {
     /**
-     * @ORM\Column(type="float", nullable=true)
+     * @ORM\Column(type="geo_point", nullable=true)
      *
-     * @Assert\Type("float")
      * @Assert\GreaterThanOrEqual(value="-90")
      * @Assert\LessThanOrEqual(value="90")
      */
     private $latitude;
 
     /**
-     * @ORM\Column(type="float", nullable=true)
+     * @ORM\Column(type="geo_point", nullable=true)
      *
      * @Assert\GreaterThanOrEqual(value="-180")
      * @Assert\LessThanOrEqual(value="180")
