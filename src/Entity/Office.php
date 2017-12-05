@@ -2,8 +2,6 @@
 
 namespace AppBundle\Entity;
 
-use AppBundle\Utils\Geo\AddressInterface;
-use AppBundle\Utils\Geo\GeoPointInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -24,7 +22,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * )
  * @UniqueEntity(fields="slug")
  */
-class Office implements AddressInterface, GeoPointInterface, \JsonSerializable
+class Office implements PostAddressInterface, GeoPointInterface, \JsonSerializable
 {
     use EntityIdentityTrait;
     use EntityCrudTrait;

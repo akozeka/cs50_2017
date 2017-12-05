@@ -1,8 +1,8 @@
 <?php
 
-namespace AppBundle\Utils\Geo;
+namespace AppBundle\Entity;
 
-interface AddressInterface
+interface PostAddressInterface
 {
     public function getCountry(): string;
 

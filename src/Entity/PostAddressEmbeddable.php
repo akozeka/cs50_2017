@@ -2,19 +2,22 @@
 
 namespace AppBundle\Entity;
 
-use AppBundle\Utils\Geo\AddressInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
  * @ORM\Embeddable
  */
-class PostAddressEmbeddable implements AddressInterface
+class PostAddressEmbeddable implements PostAddressInterface
 {
     /**
      * @var string
      *
      * @ORM\Column(type="string", length=2, options={"fixed": true})
+     *
+     * @Assert\NotBlank
+     * @Assert\Length(max=2)
      */
     private $country;
 
@@ -22,6 +25,9 @@ class PostAddressEmbeddable implements AddressInterface
      * @var string
      *
      * @ORM\Column(type="string")
+     *
+     * @Assert\NotBlank
+     * @Assert\Length(max=255)
      */
     private $city;
 
@@ -29,13 +35,17 @@ class PostAddressEmbeddable implements AddressInterface
      * @var string|null
      *
      * @ORM\Column(type="string", nullable=true)
+     *
+     * @Assert\Length(max=255)
      */
     private $address;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="string", length=5, nullable=true)
+     *
+     * @Assert\Length(max=5)
      */
     private $zipCode;
 
@@ -47,7 +57,7 @@ class PostAddressEmbeddable implements AddressInterface
         $this->zipCode = $zipCode;
     }
 
-    public static function createFromAddress(AddressInterface $address): self
+    public static function createFromAddress(PostAddressInterface $address): self
     {
         return new self(
             $address->getCountry(),
@@ -57,7 +67,7 @@ class PostAddressEmbeddable implements AddressInterface
         );
     }
 
-    public function equals(AddressInterface $other): bool
+    public function equals(PostAddressInterface $other): bool
     {
         return
             mb_strtolower($this->country) === mb_strtolower($other->getCountry()) &&

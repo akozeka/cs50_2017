@@ -3,7 +3,6 @@
 namespace AppBundle\Entity;
 
 use AppBundle\Utils\Registration;
-use AppBundle\Utils\Geo\AddressInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -20,7 +19,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  *     }
  * )
  */
-class User implements UserInterface, AddressInterface
+class User implements UserInterface, PostAddressInterface
 {
     const ENABLED = 'enabled';
     const DISABLED = 'disabled';
