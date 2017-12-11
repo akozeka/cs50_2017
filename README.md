@@ -12,9 +12,9 @@ cd cs50_2017/
 Enter your local SMTP server info to enable email sending (when asked):
 ```sh
 composer install
-php bin/console server:run localhost:8000
 php bin/console doctrine:schema:create
 php bin/console doctrine:fixtures:load
+php bin/console server:run localhost:8000
 ```
 
 ## Usage:
